@@ -137,7 +137,9 @@ export default function AdminReviews({ reviews: records, errors = {} }: Props) {
 
         setBusy(true);
         if (editingId !== null) {
-            router.put(update(editingId).url, payload, {
+            // PHP sólo parsea cuerpos multipart en peticiones POST, así que se
+            // envía POST con method spoofing (_method=PUT) para subir archivos.
+            router.post(update(editingId).url, { ...payload, _method: 'put' }, {
                 forceFormData: true,
                 preserveScroll: true,
                 onSuccess,

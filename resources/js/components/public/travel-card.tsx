@@ -8,6 +8,7 @@ import {
     dateRangeLabel,
     nightsLabel,
     priceLabel,
+    travelDetailPath,
 } from '@/lib/travel';
 
 type Props = {
@@ -18,8 +19,8 @@ type Props = {
 
 export default function TravelCard({
     post,
-    linkHref = '/viajes#contacto',
-    linkLabel = 'Reservar',
+    linkHref = travelDetailPath(post),
+    linkLabel = 'Ver viaje',
 }: Props) {
     const price = priceLabel(post.price);
     const range = dateRangeLabel(post.starts_at, post.ends_at);
@@ -28,7 +29,7 @@ export default function TravelCard({
 
     return (
         <article className="tcard">
-            <div className="tcard__media">
+            <Link href={linkHref} className="tcard__media" tabIndex={-1} aria-hidden="true">
                 {post.cover_image_url ? (
                     <img src={post.cover_image_url} alt={post.title} loading="lazy" />
                 ) : (
@@ -45,16 +46,18 @@ export default function TravelCard({
                         {nights}
                     </span>
                 )}
-            </div>
+            </Link>
 
             <div className="tcard__body">
-                {post.destination && (
-                    <div className="tcard__kicker">
-                        <MapPin size={15} aria-hidden="true" />
-                        {post.destination}
-                    </div>
-                )}
-                <h3>{post.title}</h3>
+                <Link href={linkHref} className="tcard__title">
+                    {post.destination && (
+                        <span className="tcard__kicker">
+                            <MapPin size={15} aria-hidden="true" />
+                            {post.destination}
+                        </span>
+                    )}
+                    <h3>{post.title}</h3>
+                </Link>
                 <p>{post.excerpt || post.content}</p>
                 {range && (
                     <div className="tcard__meta">

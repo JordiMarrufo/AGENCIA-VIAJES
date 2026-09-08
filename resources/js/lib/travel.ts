@@ -29,29 +29,35 @@ export function formatDate(value: string | null | undefined): string {
     if (!value) {
         return '';
     }
-    const [year, month, day] = value.split('-').map(Number);
-    if (!year || !month) {
+    // Laravel serializa las fechas con hora (ISO). Solo interesa la parte YYYY-MM-DD.
+    const [year, month, day] = value.slice(0, 10).split('-').map(Number);
+    if (!year || !month || !day) {
         return value;
     }
     return `${day} ${MONTHS[month - 1]} ${year}`;
 }
 
+const datePart = (value: string | null | undefined): string =>
+    value ? value.slice(0, 10) : '';
+
 export function dateRangeLabel(start: string | null, end: string | null): string {
-    if (!start && !end) {
+    const startDate = datePart(start);
+    const endDate = datePart(end);
+    if (!startDate && !endDate) {
         return '';
     }
-    if (!end) {
-        return formatDate(start);
+    if (!endDate) {
+        return formatDate(startDate);
     }
-    if (!start) {
-        return formatDate(end);
+    if (!startDate) {
+        return formatDate(endDate);
     }
-    const sameMonth = start.slice(0, 7) === end.slice(0, 7);
+    const sameMonth = startDate.slice(0, 7) === endDate.slice(0, 7);
     if (sameMonth) {
-        const startDay = Number(start.split('-')[2]);
-        return `${startDay} – ${formatDate(end)}`;
+        const startDay = Number(startDate.split('-')[2]);
+        return `${startDay} – ${formatDate(endDate)}`;
     }
-    return `${formatDate(start)} – ${formatDate(end)}`;
+    return `${formatDate(startDate)} – ${formatDate(endDate)}`;
 }
 
 export function nightsLabel(start: string | null, end: string | null): string {
@@ -83,4 +89,8 @@ export function priceLabel(price: string | null | undefined): string {
 
 export function isUpcomingPost(post: TravelPostData): boolean {
     return post.category !== 'past';
+}
+
+export function travelDetailPath(post: Pick<TravelPostData, 'slug'>): string {
+    return post.slug ? `/viajes/${post.slug}` : '/viajes';
 }

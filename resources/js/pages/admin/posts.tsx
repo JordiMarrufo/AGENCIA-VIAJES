@@ -21,6 +21,7 @@ import {
 import { destroy, store, toggle, update } from '@/routes/admin/posts';
 import { posts } from '@/routes/admin';
 import { home } from '@/routes';
+import MediaGallery, { type MediaEntry } from '@/components/admin/media-gallery';
 import TravelCard from '@/components/public/travel-card';
 import type { TravelPostData } from '@/types/travel';
 
@@ -37,6 +38,8 @@ type TravelPostRow = {
     price: string | number | null;
     is_published: boolean;
     cover_image_url: string | null;
+    gallery_image_urls: string[];
+    gallery_video_urls: string[];
 };
 
 type Props = {
@@ -294,9 +297,10 @@ export default function AdminPosts({ posts: records, errors = {} }: Props) {
     const [editingId, setEditingId] = useState<number | null>(null);
     const [fields, setFields] = useState<Fields>(EMPTY);
     const [coverFile, setCoverFile] = useState<File | null>(null);
-    const [videoFile, setVideoFile] = useState<File | null>(null);
     const [busy, setBusy] = useState(false);
     const [coverPreview, setCoverPreview] = useState<string | null>(null);
+    const [galleryPhotos, setGalleryPhotos] = useState<MediaEntry[]>([]);
+    const [galleryVideos, setGalleryVideos] = useState<MediaEntry[]>([]);
 
     useEffect(() => {
         if (!coverFile) {
@@ -326,14 +330,16 @@ export default function AdminPosts({ posts: records, errors = {} }: Props) {
             starts_at: fields.starts_at || null,
             ends_at: fields.ends_at || null,
             cover_image_url: coverPreview ?? editing?.cover_image_url ?? null,
+            gallery_image_urls: [],
+            gallery_video_urls: [],
         }),
         [fields, editingId, editing, coverPreview],
     );
 
     const openCreate = (): void => {
+        clearGallery();
         setFields(EMPTY);
         setCoverFile(null);
-        setVideoFile(null);
         setEditingId(null);
         setCreating(true);
     };
@@ -341,19 +347,57 @@ export default function AdminPosts({ posts: records, errors = {} }: Props) {
     const openEdit = (post: TravelPostRow): void => {
         setFields(fromRow(post));
         setCoverFile(null);
-        setVideoFile(null);
+        setGalleryPhotos(photosFromRow(post));
+        setGalleryVideos(videosFromRow(post));
         setCreating(false);
         setEditingId(post.id);
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     const cancel = (): void => {
+        clearGallery();
         setCreating(false);
         setEditingId(null);
         setFields(EMPTY);
         setCoverFile(null);
-        setVideoFile(null);
     };
+
+    const clearGallery = (): void => {
+        for (const entry of galleryPhotos) {
+            if (entry.file && entry.url) {
+                URL.revokeObjectURL(entry.url);
+            }
+        }
+        for (const entry of galleryVideos) {
+            if (entry.file && entry.url) {
+                URL.revokeObjectURL(entry.url);
+            }
+        }
+        setGalleryPhotos([]);
+        setGalleryVideos([]);
+    };
+
+    const photosFromRow = (post: TravelPostRow): MediaEntry[] => {
+        const cover = post.cover_image_url;
+        const urls = (post.gallery_image_urls ?? []).filter((url) => url !== cover);
+
+        return urls.map((url) => ({
+            id: url,
+            kind: 'image' as const,
+            url,
+            file: null,
+            name: url.split('/').pop() ?? url,
+        }));
+    };
+
+    const videosFromRow = (post: TravelPostRow): MediaEntry[] =>
+        (post.gallery_video_urls ?? []).map((url) => ({
+            id: url,
+            kind: 'video' as const,
+            url,
+            file: null,
+            name: url.split('/').pop() ?? url,
+        }));
 
     const updateField = <K extends keyof Fields>(key: K, value: Fields[K]): void => {
         setFields((prev) => ({ ...prev, [key]: value }));
@@ -384,8 +428,24 @@ export default function AdminPosts({ posts: records, errors = {} }: Props) {
         if (coverFile) {
             payload.cover_image = coverFile;
         }
-        if (videoFile) {
-            payload.video_file = videoFile;
+
+        const photosOrder = galleryPhotos.map((entry) =>
+            entry.file ? `new:${entry.id}` : entry.url ?? '',
+        );
+        const videosOrder = galleryVideos.map((entry) =>
+            entry.file ? `new:${entry.id}` : entry.url ?? '',
+        );
+        payload.photos_order = JSON.stringify(photosOrder);
+        payload.videos_order = JSON.stringify(videosOrder);
+        for (const entry of galleryPhotos) {
+            if (entry.file) {
+                payload[`gallery_photo_${entry.id}`] = entry.file;
+            }
+        }
+        for (const entry of galleryVideos) {
+            if (entry.file) {
+                payload[`gallery_video_${entry.id}`] = entry.file;
+            }
         }
 
         const onSuccess = (): void => {
@@ -395,7 +455,9 @@ export default function AdminPosts({ posts: records, errors = {} }: Props) {
 
         setBusy(true);
         if (editingId !== null) {
-            router.put(update(editingId).url, payload, {
+            // PHP sólo parsea cuerpos multipart en peticiones POST, así que se
+            // envía POST con method spoofing (_method=PUT) para subir archivos.
+            router.post(update(editingId).url, { ...payload, _method: 'put' }, {
                 forceFormData: true,
                 preserveScroll: true,
                 onSuccess,
@@ -646,8 +708,10 @@ export default function AdminPosts({ posts: records, errors = {} }: Props) {
                                             <ImagePlus size={18} aria-hidden="true" />
                                         </span>
                                         <div>
-                                            <h3>Imagen y video</h3>
-                                            <p>Arrastra o elige la foto de portada y un video opcional.</p>
+                                            <h3>Imágenes y videos</h3>
+                                            <p>
+                                                Portada, fotos extra y videos de la galería. Arrastra para reordenar.
+                                            </p>
                                         </div>
                                     </header>
                                     <div className="ad-fs__body">
@@ -668,13 +732,26 @@ export default function AdminPosts({ posts: records, errors = {} }: Props) {
                                             </div>
 
                                             <div className="tv-field" style={{ marginTop: '1.1rem' }}>
-                                                <label htmlFor="post-video">Video promocional (opcional)</label>
-                                                <AdDropzone
-                                                    id="post-video"
+                                                <MediaGallery
+                                                    id="post-gallery-photos"
+                                                    kind="image"
+                                                    label="Fotos de la galería"
+                                                    hint="Arrastra o elige tus fotos del viaje"
+                                                    accept="image/jpeg,image/png,image/webp"
+                                                    entries={galleryPhotos}
+                                                    onChange={setGalleryPhotos}
+                                                />
+                                            </div>
+
+                                            <div className="tv-field" style={{ marginTop: '1.1rem' }}>
+                                                <MediaGallery
+                                                    id="post-gallery-videos"
                                                     kind="video"
+                                                    label="Videos del viaje"
+                                                    hint="Arrastra o elige los videos del viaje"
                                                     accept="video/mp4,video/webm,video/quicktime"
-                                                    file={videoFile}
-                                                    onFile={setVideoFile}
+                                                    entries={galleryVideos}
+                                                    onChange={setGalleryVideos}
                                                 />
                                             </div>
                                         </div>

@@ -17,6 +17,8 @@ export type TravelPostData = {
     ends_at: string | null;
     price: string | null;
     cover_image_url: string | null;
+    gallery_image_urls: string[];
+    gallery_video_urls: string[];
 };
 
 export type ReviewData = {

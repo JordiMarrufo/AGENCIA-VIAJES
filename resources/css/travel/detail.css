@@ -1,0 +1,523 @@
+/* ============================================================
+   AGENCIA DE VIAJES — Página de detalle de un viaje
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   PORTADA (hero) DEL VIAJE
+   ------------------------------------------------------------ */
+.pd-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 7.5rem 0 4.2rem;
+    color: var(--tv-white);
+}
+
+.pd-hero__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.pd-hero__shade {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, rgba(6, 41, 63, 0.55) 0%, rgba(6, 41, 63, 0.35) 45%, rgba(6, 41, 63, 0.82) 100%),
+        radial-gradient(60% 80% at 20% 0%, rgba(15, 163, 163, 0.25), transparent 70%);
+}
+
+.pd-hero__content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 860px;
+    margin-inline: 0 auto;
+}
+
+.pd-crumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem;
+    margin-bottom: 1.4rem;
+    font-size: 0.86rem;
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.pd-crumb a {
+    color: rgba(255, 255, 255, 0.92);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.pd-crumb a:hover {
+    color: var(--tv-white);
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+.pd-crumb__current {
+    color: var(--tv-white);
+    font-weight: 600;
+    max-width: 420px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pd-hero__place {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0.95rem 0 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.pd-hero h1 {
+    margin: 0.55rem 0 0;
+    font-size: clamp(2.2rem, 5.4vw, 3.7rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--tv-white);
+    text-wrap: balance;
+}
+
+.pd-hero__excerpt {
+    margin: 1.1rem 0 0;
+    max-width: 640px;
+    font-size: clamp(1rem, 1.9vw, 1.18rem);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.pd-hero__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.5rem;
+    margin-top: 1.4rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.pd-hero__facts span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.pd-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1.9rem;
+}
+
+/* ------------------------------------------------------------
+   DETALLE PRINCIPAL
+   ------------------------------------------------------------ */
+.pd-main {
+    padding: 3.6rem 0 2.6rem;
+    background: var(--tv-white);
+}
+
+.pd-main__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 3rem;
+    align-items: start;
+}
+
+.pd-about__text {
+    margin-top: 1.4rem;
+    font-size: 1.04rem;
+    line-height: 1.75;
+    color: var(--tv-ink-2);
+}
+
+.pd-about__text p {
+    margin: 0 0 1.05rem;
+}
+
+.pd-about__text p:last-child {
+    margin-bottom: 0;
+}
+
+.pd-about__rich > *:last-child {
+    margin-bottom: 0;
+}
+
+.pd-facts {
+    position: sticky;
+    top: 100px;
+    border: 1px solid var(--tv-plata-300);
+    border-radius: var(--tv-radius-md);
+    background: var(--tv-white);
+    box-shadow: var(--tv-shadow-md);
+    padding: 1.5rem 1.5rem 1.25rem;
+}
+
+.pd-facts h3 {
+    margin: 0 0 1rem;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--tv-mar-ink);
+}
+
+.pd-facts dl {
+    margin: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.75rem 1rem;
+    align-items: baseline;
+}
+
+.pd-facts dt {
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--tv-plata-500);
+}
+
+.pd-facts dd {
+    margin: 0;
+    font-size: 0.96rem;
+    font-weight: 700;
+    color: var(--tv-ink);
+    text-align: right;
+}
+
+.pd-facts dd.pd-facts__price {
+    color: var(--tv-magenta-deep);
+    font-size: 1.1rem;
+}
+
+/* ------------------------------------------------------------
+   GALERÍA DE FOTOS (mosaico)
+   ------------------------------------------------------------ */
+.pd-gallery {
+    padding: 1.6rem 0 4rem;
+    background:
+        radial-gradient(50% 80% at 90% 0%, rgba(15, 163, 163, 0.12), transparent 70%),
+        var(--tv-plata-100);
+}
+
+.pd-gallery__count {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.5rem 1rem;
+    border-radius: var(--tv-radius-pill);
+    background: var(--tv-white);
+    border: 1px solid var(--tv-plata-300);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--tv-mar);
+}
+
+.pd-mosaic {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: 210px;
+    gap: 0.8rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.pd-mosaic__item:first-child {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.pd-mosaic__btn {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: none;
+    border-radius: var(--tv-radius-md);
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--tv-mar-soft);
+}
+
+.pd-mosaic__btn img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.45s ease;
+}
+
+.pd-mosaic__btn:hover img {
+    transform: scale(1.045);
+}
+
+.pd-mosaic__zoom {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(6, 41, 63, 0.35);
+    color: var(--tv-white);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.pd-mosaic__btn:hover .pd-mosaic__zoom,
+.pd-mosaic__btn:focus-visible .pd-mosaic__zoom {
+    opacity: 1;
+}
+
+/* ------------------------------------------------------------
+   VIDEOS
+   ------------------------------------------------------------ */
+.pd-videos__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1rem;
+}
+
+.pd-videos__grid video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--tv-radius-md);
+    background: var(--tv-mar-ink);
+    box-shadow: var(--tv-shadow-sm);
+}
+
+/* ------------------------------------------------------------
+   LLAMADA A LA ACCIÓN
+   ------------------------------------------------------------ */
+.pd-cta {
+    padding: 3.6rem 0;
+    background: var(--tv-grad-deep);
+    color: var(--tv-white);
+}
+
+.pd-cta__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.pd-cta h2 {
+    margin: 0;
+    font-size: clamp(1.6rem, 3.2vw, 2.3rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+}
+
+.pd-cta__inner > div > p {
+    margin: 0.85rem 0 0;
+    max-width: 560px;
+    font-size: 1.02rem;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.86);
+}
+
+.pd-cta__checks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.6rem;
+    list-style: none;
+    margin: 1.2rem 0 0;
+    padding: 0;
+}
+
+.pd-cta__checks li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.pd-cta__checks svg {
+    color: #6fe0c4;
+}
+
+.pd-cta__btn {
+    background: var(--tv-white);
+    color: var(--tv-mar-ink);
+    box-shadow: var(--tv-shadow-md);
+}
+
+.pd-cta__btn:hover {
+    background: var(--tv-magenta-soft);
+    color: var(--tv-magenta-deep);
+    transform: translateY(-2px);
+}
+
+/* ------------------------------------------------------------
+   OTROS VIAJES
+   ------------------------------------------------------------ */
+.pd-related {
+    background: var(--tv-plata-50);
+}
+
+/* ------------------------------------------------------------
+   LIGHTBOX
+   ------------------------------------------------------------ */
+.pd-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: rgba(4, 22, 33, 0.94);
+    animation: pd-fade 0.18s ease;
+}
+
+@keyframes pd-fade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.pd-lightbox__close {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.2rem;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--tv-white);
+    cursor: pointer;
+    transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.pd-lightbox__close:hover {
+    background: rgba(255, 255, 255, 0.28);
+    transform: scale(1.06);
+}
+
+.pd-lightbox__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--tv-white);
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.pd-lightbox__nav:hover {
+    background: rgba(255, 255, 255, 0.28);
+}
+
+.pd-lightbox__nav--prev {
+    left: 1.2rem;
+}
+
+.pd-lightbox__nav--next {
+    right: 1.2rem;
+}
+
+.pd-lightbox__figure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    max-width: min(1000px, 92vw);
+    margin: 0;
+}
+
+.pd-lightbox__figure img {
+    display: block;
+    max-width: 100%;
+    max-height: 82vh;
+    border-radius: var(--tv-radius-md);
+    box-shadow: var(--tv-shadow-lg);
+}
+
+.pd-lightbox__figure figcaption {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.85);
+    text-align: center;
+}
+
+/* ------------------------------------------------------------
+   RESPONSIVE
+   ------------------------------------------------------------ */
+@media (max-width: 1024px) {
+    .pd-main__grid {
+        grid-template-columns: minmax(0, 1fr) 300px;
+        gap: 2rem;
+    }
+
+    .pd-mosaic {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-auto-rows: 190px;
+    }
+}
+
+@media (max-width: 760px) {
+    .pd-main__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pd-facts {
+        position: static;
+    }
+
+    .pd-mosaic {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-auto-rows: 150px;
+        gap: 0.6rem;
+    }
+
+    .pd-mosaic__item:first-child {
+        grid-column: span 2;
+        grid-row: span 2;
+    }
+
+    .pd-hero {
+        padding-top: 6.6rem;
+    }
+}
+
+@media (max-width: 520px) {
+    .pd-mosaic {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .pd-lightbox {
+        padding: 1rem;
+    }
+
+    .pd-lightbox__nav--prev {
+        left: 0.5rem;
+    }
+
+    .pd-lightbox__nav--next {
+        right: 0.5rem;
+    }
+}

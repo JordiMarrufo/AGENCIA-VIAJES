@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 import { useRef } from 'react';
 import TravelCard from '@/components/public/travel-card';
-import { categoryChip, categoryLabel, categoryTile, formatDate } from '@/lib/travel';
+import { categoryChip, categoryLabel, categoryTile, formatDate, travelDetailPath } from '@/lib/travel';
 import type { TravelPostData } from '@/types/travel';
 import '../../css/travel/home.css';
 
@@ -146,7 +146,7 @@ export default function Home({ upcomingPosts, pastPosts }: HomeProps) {
                             {pastPosts.map((post, index) => (
                                 <Link
                                     key={post.id}
-                                    href="/viajes#contacto"
+                                    href={travelDetailPath(post)}
                                     className={`pv-mosaic__tile pv-tile${index === 0 ? ' pv-tile--big' : ''}`}
                                 >
                                     {post.cover_image_url ? (

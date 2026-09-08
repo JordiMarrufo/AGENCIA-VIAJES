@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PublicContentController::class, 'home'])->name('home');
 Route::get('viajes', [PublicContentController::class, 'index'])->name('travel-content');
+Route::get('viajes/{travel:slug}', [PublicContentController::class, 'show'])->name('travel-detail');
 Route::post('contacto', [PublicContentController::class, 'storeContact'])->name('contact.store');
 
 Route::middleware(['auth', 'verified'])->group(function () {

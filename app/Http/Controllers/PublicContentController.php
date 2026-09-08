@@ -45,6 +45,27 @@ class PublicContentController extends Controller
         ]);
     }
 
+    public function show(string $slug): Response
+    {
+        $post = TravelPost::where('slug', $slug)->where('is_published', true)->first();
+
+        if ($post === null) {
+            abort(404);
+        }
+
+        $recommended = TravelPost::where('is_published', true)
+            ->whereKeyNot($post->getKey())
+            ->orderByRaw('category = ? DESC', [$post->category])
+            ->latest('published_at')
+            ->take(6)
+            ->get();
+
+        return Inertia::render('travel-detail', [
+            'post' => $post,
+            'recommendedPosts' => $recommended,
+        ]);
+    }
+
     public function storeContact(Request $request): RedirectResponse
     {
         $data = $request->validate([
