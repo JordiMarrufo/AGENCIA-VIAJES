@@ -1,0 +1,369 @@
+/* ============================================================
+   AGENCIA DE VIAJES — Página de inicio
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   HERO
+   ------------------------------------------------------------ */
+
+.pv-hero {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: clamp(540px, 82vh, 780px);
+    overflow: hidden;
+    isolation: isolate;
+    background: var(--tv-grad-deep);
+    text-align: center;
+}
+
+/* Fondo decorativo cuando no hay fotografía */
+.pv-hero::before {
+    content: '';
+    position: absolute;
+    inset: -20%;
+    z-index: -2;
+    background:
+        radial-gradient(38% 55% at 82% 16%, rgba(15, 163, 163, 0.4), transparent 70%),
+        radial-gradient(42% 60% at 12% 88%, rgba(225, 41, 161, 0.28), transparent 70%),
+        radial-gradient(50% 65% at 50% 45%, rgba(46, 125, 82, 0.35), transparent 75%);
+    filter: saturate(1.05);
+}
+
+/* Imagen de fondo */
+.pv-hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: -3;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Velo para que el texto se lea sobre la imagen */
+.pv-hero__shade {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+        linear-gradient(180deg, rgba(6, 41, 63, 0.42) 0%, rgba(6, 41, 63, 0.28) 34%, rgba(10, 56, 84, 0.55) 100%);
+}
+
+.pv-hero__content {
+    position: relative;
+    z-index: 2;
+    padding: 5rem 0 6.5rem;
+    color: var(--tv-white);
+}
+
+.pv-hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0 0 1.1rem;
+    padding: 0.4rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: var(--tv-radius-pill);
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(6px);
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--tv-plata-100);
+}
+
+.pv-hero__title {
+    margin: 0 auto;
+    max-width: 900px;
+    font-size: clamp(2.35rem, 6vw, 4.4rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    color: var(--tv-white);
+    text-wrap: balance;
+}
+
+.pv-hero__title .accent {
+    color: var(--tv-rio-line);
+}
+
+.pv-hero__sub {
+    margin: 1.3rem auto 0;
+    max-width: 620px;
+    font-size: clamp(1.02rem, 2vw, 1.2rem);
+    line-height: 1.65;
+    color: color-mix(in srgb, var(--tv-white) 86%, transparent);
+}
+
+.pv-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.9rem;
+    margin-top: 2.1rem;
+}
+
+.pv-hero__scroll {
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    bottom: 1.4rem;
+    transform: translateX(-50%);
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--tv-white);
+    text-decoration: none;
+    opacity: 0.9;
+}
+
+.pv-hero__scroll svg {
+    animation: tv-bob 2.2s ease-in-out infinite;
+}
+
+@keyframes tv-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+}
+
+/* ------------------------------------------------------------
+   CARRUSEL — Próximos viajes
+   ------------------------------------------------------------ */
+
+.pv-carousel__tools {
+    display: flex;
+    gap: 0.6rem;
+}
+
+.pv-arrow {
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--tv-plata-300);
+    border-radius: 50%;
+    background: var(--tv-white);
+    color: var(--tv-mar);
+    cursor: pointer;
+    box-shadow: var(--tv-shadow-sm);
+    transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+}
+
+.pv-arrow:hover {
+    background: var(--tv-mar);
+    border-color: var(--tv-mar);
+    color: var(--tv-white);
+}
+
+.pv-arrow:disabled {
+    opacity: 0.4;
+    cursor: default;
+    pointer-events: none;
+}
+
+.pv-scroller {
+    display: flex;
+    gap: 1.4rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding: 0.35rem calc((100% - min(100% - 2 * var(--tv-gutter), var(--tv-container))) / 2) 1rem;
+}
+
+.pv-scroller::-webkit-scrollbar {
+    display: none;
+}
+
+.pv-scroller__item {
+    flex: 0 0 min(360px, 86vw);
+    scroll-snap-align: start;
+}
+
+/* ------------------------------------------------------------
+   MOSAICO — Viajes anteriores
+   ------------------------------------------------------------ */
+
+.pv-mosaic {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 200px;
+    grid-auto-flow: dense;
+    gap: 1.1rem;
+}
+
+.pv-mosaic__tile:nth-child(6n + 1) {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.pv-mosaic__tile:nth-child(6n + 5) {
+    grid-column: span 2;
+}
+
+@media (max-width: 1000px) {
+    .pv-mosaic {
+        grid-template-columns: repeat(3, 1fr);
+        grid-auto-rows: 170px;
+    }
+}
+
+@media (max-width: 680px) {
+    .pv-mosaic {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 150px;
+        gap: 0.8rem;
+    }
+
+    .pv-mosaic__tile:nth-child(6n + 1) {
+        grid-column: span 2;
+        grid-row: span 1;
+    }
+}
+
+/* Cada baldosa */
+.pv-tile {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: var(--tv-radius-md);
+    box-shadow: var(--tv-shadow-sm);
+    text-decoration: none;
+    background: var(--tv-grad-deep);
+}
+
+.pv-tile--magenta { background: var(--tv-grad-magenta); }
+.pv-tile--rio { background: linear-gradient(140deg, var(--tv-rio-deep), var(--tv-rio)); }
+.pv-tile--bosque { background: linear-gradient(140deg, var(--tv-bosque-deep), var(--tv-bosque)); }
+
+/* Relleno degradado cuando la baldosa aún no tiene fotografía */
+.pv-tile__fallback {
+    position: absolute;
+    inset: 0;
+}
+
+.pv-tile img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.55s ease;
+}
+
+.pv-tile:hover img {
+    transform: scale(1.06);
+}
+
+.pv-tile__shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(6, 41, 63, 0.05) 30%, rgba(6, 41, 63, 0.82) 100%);
+    transition: background-color 0.25s ease;
+}
+
+.pv-tile:hover .pv-tile__shade {
+    background: linear-gradient(180deg, rgba(6, 41, 63, 0.02) 20%, rgba(6, 41, 63, 0.9) 100%);
+}
+
+.pv-tile__chip {
+    position: absolute;
+    top: 0.8rem;
+    left: 0.8rem;
+}
+
+.pv-tile__inner {
+    position: absolute;
+    inset: auto 0 0;
+    padding: 1.4rem 1.1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    color: var(--tv-white);
+}
+
+.pv-tile__inner strong {
+    font-size: 1.15rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.pv-tile--big .pv-tile__inner strong {
+    font-size: 1.5rem;
+}
+
+.pv-tile__inner small {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.84rem;
+    color: var(--tv-plata-200);
+}
+
+.pv-tile__inner svg {
+    color: var(--tv-rio-line);
+}
+
+/* ------------------------------------------------------------
+   BANDEAU CTA
+   ------------------------------------------------------------ */
+
+.pv-banner {
+    padding-top: 0;
+}
+
+.pv-banner__panel {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--tv-radius-lg);
+    background: var(--tv-grad-deep);
+    color: var(--tv-white);
+    padding: 3.2rem 2.6rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.8rem;
+    box-shadow: var(--tv-shadow-lg);
+}
+
+.pv-banner__panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(46% 120% at 90% 0%, rgba(15, 163, 163, 0.5), transparent 70%),
+        radial-gradient(40% 130% at 6% 110%, rgba(225, 41, 161, 0.35), transparent 70%);
+    pointer-events: none;
+}
+
+.pv-banner__panel > * {
+    position: relative;
+}
+
+.pv-banner h2 {
+    margin: 0;
+    max-width: 560px;
+    font-size: clamp(1.6rem, 3.2vw, 2.35rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+}
+
+.pv-banner p {
+    margin: 0.7rem 0 0;
+    max-width: 560px;
+    color: var(--tv-plata-300);
+    line-height: 1.6;
+}
+
+@media (max-width: 680px) {
+    .pv-banner__panel {
+        padding: 2.4rem 1.6rem;
+    }
+}

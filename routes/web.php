@@ -4,7 +4,7 @@ use App\Http\Controllers\Admin\ContentController;
 use App\Http\Controllers\PublicContentController;
 use Illuminate\Support\Facades\Route;
 
-Route::inertia('/', 'welcome')->name('home');
+Route::get('/', [PublicContentController::class, 'home'])->name('home');
 Route::get('viajes', [PublicContentController::class, 'index'])->name('travel-content');
 Route::post('contacto', [PublicContentController::class, 'storeContact'])->name('contact.store');
 

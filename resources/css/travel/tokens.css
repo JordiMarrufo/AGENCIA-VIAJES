@@ -1,0 +1,77 @@
+/* ============================================================
+   AGENCIA DE VIAJES — Design tokens
+   Paleta: plata (silver) · río (turquesa) · mar (océano) · bosque
+   Acento de marca: magenta #E129A1 (logo)
+   ============================================================ */
+
+:root {
+    /* Marca */
+    --tv-magenta: #e129a1;
+    --tv-magenta-deep: #c01885;
+    --tv-magenta-ink: #97116b;
+    --tv-magenta-soft: #fbe3f3;
+
+    /* Mar (océano profundo) */
+    --tv-mar-ink: #06293f;
+    --tv-mar-deep: #0a3854;
+    --tv-mar: #0e4a6e;
+    --tv-mar-soft: #e7f1f7;
+    --tv-mar-line: #bfd6e3;
+
+    /* Río (turquesa) */
+    --tv-rio-deep: #0b8280;
+    --tv-rio: #0fa3a3;
+    --tv-rio-soft: #e0f5f2;
+    --tv-rio-line: #b6e3de;
+
+    /* Bosque */
+    --tv-bosque-deep: #1f5c3c;
+    --tv-bosque: #2e7d52;
+    --tv-bosque-soft: #e5f2ea;
+    --tv-bosque-line: #bfdccb;
+
+    /* Plata (neutros) */
+    --tv-plata-50: #fbfcfc;
+    --tv-plata-100: #f2f5f7;
+    --tv-plata-200: #e6ecf0;
+    --tv-plata-300: #d2dce2;
+    --tv-plata-400: #a9bbc6;
+    --tv-plata-500: #80949f;
+
+    /* Tinta */
+    --tv-ink: #173140;
+    --tv-ink-2: #40586a;
+    --tv-white: #ffffff;
+
+    /* Radios */
+    --tv-radius-sm: 10px;
+    --tv-radius-md: 16px;
+    --tv-radius-lg: 24px;
+    --tv-radius-pill: 999px;
+
+    /* Sombras */
+    --tv-shadow-sm: 0 1px 2px rgba(10, 56, 84, 0.06), 0 4px 14px rgba(10, 56, 84, 0.06);
+    --tv-shadow-md: 0 10px 30px -12px rgba(10, 56, 84, 0.18);
+    --tv-shadow-lg: 0 24px 60px -24px rgba(6, 41, 63, 0.3);
+
+    /* Tipografía */
+    --tv-font:
+        'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+        'Noto Color Emoji';
+
+    /* Layout */
+    --tv-container: 1180px;
+    --tv-gutter: 1.25rem;
+
+    /* Gradientes */
+    --tv-grad-ribbon: linear-gradient(90deg, var(--tv-mar) 0%, var(--tv-rio) 48%, var(--tv-bosque) 100%);
+    --tv-grad-deep: linear-gradient(155deg, var(--tv-mar-ink) 0%, var(--tv-mar) 52%, var(--tv-bosque-deep) 130%);
+    --tv-grad-magenta: linear-gradient(135deg, var(--tv-magenta) 0%, var(--tv-magenta-deep) 100%);
+}
+
+/* Contenedor público reutilizable */
+.tv-container {
+    width: min(100% - 2 * var(--tv-gutter), var(--tv-container));
+    margin-inline: auto;
+}

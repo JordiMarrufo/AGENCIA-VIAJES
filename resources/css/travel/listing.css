@@ -1,0 +1,366 @@
+/* ============================================================
+   AGENCIA DE VIAJES — Página "Viajes y experiencias" (listado)
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   CABECERA DEL LISTADO
+   ------------------------------------------------------------ */
+
+.pg-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 3.6rem 0 3.2rem;
+    background:
+        radial-gradient(46% 90% at 88% -20%, rgba(15, 163, 163, 0.18), transparent 70%),
+        radial-gradient(40% 90% at 6% 130%, rgba(225, 41, 161, 0.1), transparent 70%),
+        linear-gradient(180deg, var(--tv-plata-50), var(--tv-mar-soft));
+    border-bottom: 1px solid var(--tv-plata-200);
+    text-align: center;
+}
+
+.pg-hero__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pg-hero .tv-eyebrow {
+    margin-bottom: 1.1rem;
+}
+
+.pg-hero h1 {
+    margin: 0;
+    font-size: clamp(2rem, 4.6vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: var(--tv-mar-ink);
+    text-wrap: balance;
+}
+
+.pg-hero__lead {
+    margin: 1.2rem auto 0;
+    max-width: 640px;
+    font-size: clamp(1rem, 1.8vw, 1.15rem);
+    line-height: 1.65;
+    color: var(--tv-ink-2);
+}
+
+.pg-hero__anchors {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.7rem;
+    margin-top: 1.8rem;
+}
+
+/* ------------------------------------------------------------
+   REJILLA DE VIAJES
+   ------------------------------------------------------------ */
+
+.pg-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.6rem;
+}
+
+/* ------------------------------------------------------------
+   RESEÑAS DE VIAJEROS
+   ------------------------------------------------------------ */
+
+.tv-reviews {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.4rem;
+}
+
+.tv-review {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding: 1.7rem 1.6rem 1.5rem;
+    border: 1px solid var(--tv-plata-200);
+    border-radius: var(--tv-radius-md);
+    background: var(--tv-white);
+    box-shadow: var(--tv-shadow-sm);
+}
+
+.tv-review::before {
+    content: '“';
+    position: absolute;
+    top: 0.35rem;
+    right: 1.1rem;
+    font-size: 3.4rem;
+    line-height: 1;
+    color: var(--tv-plata-200);
+    pointer-events: none;
+}
+
+.tv-review__stars {
+    display: inline-flex;
+    gap: 0.2rem;
+    color: var(--tv-rio);
+}
+
+.tv-review__stars span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+.tv-review__body {
+    margin: 0;
+    font-size: 0.96rem;
+    line-height: 1.65;
+    color: var(--tv-ink-2);
+}
+
+.tv-review__author {
+    margin-top: auto;
+}
+
+.tv-review__author strong {
+    display: block;
+    font-size: 0.98rem;
+    color: var(--tv-ink);
+}
+
+.tv-review__author span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.15rem;
+    font-size: 0.82rem;
+    color: var(--tv-ink-2);
+}
+
+.tv-review__author svg {
+    color: var(--tv-magenta);
+}
+
+/* ------------------------------------------------------------
+   FRASES
+   ------------------------------------------------------------ */
+
+.tv-quotes {
+    display: grid;
+    gap: 2.4rem;
+}
+
+.tv-quote {
+    margin: 0 auto;
+    max-width: 780px;
+    text-align: center;
+}
+
+.tv-quote__mark {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    margin: 0 auto 1.2rem;
+    border-radius: 50%;
+    background: var(--tv-rio-soft);
+    color: var(--tv-rio);
+}
+
+.tv-quote blockquote {
+    margin: 0;
+    font-size: clamp(1.18rem, 2.4vw, 1.5rem);
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--tv-ink);
+    text-wrap: balance;
+}
+
+.tv-quote cite {
+    display: block;
+    margin-top: 1rem;
+    font-style: normal;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--tv-mar);
+}
+
+/* ------------------------------------------------------------
+   CONTACTO
+   ------------------------------------------------------------ */
+
+.pg-contact {
+    position: relative;
+    overflow: hidden;
+}
+
+.pg-contact__panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: 3rem;
+    align-items: center;
+}
+
+.pg-contact__info h2 {
+    margin: 0;
+    font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--tv-mar-ink);
+    text-wrap: balance;
+}
+
+.pg-contact__info > p {
+    margin: 1.1rem 0 0;
+    max-width: 480px;
+    line-height: 1.65;
+    color: var(--tv-ink-2);
+}
+
+.pg-contact__list {
+    display: grid;
+    gap: 0.85rem;
+    margin: 1.6rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.pg-contact__list li {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.96rem;
+    color: var(--tv-ink);
+}
+
+.pg-contact__list svg {
+    flex: none;
+    color: var(--tv-rio);
+}
+
+.pg-contact__card {
+    padding: 2.2rem;
+    border: 1px solid var(--tv-plata-200);
+    border-radius: var(--tv-radius-lg);
+    background: var(--tv-white);
+    box-shadow: var(--tv-shadow-md);
+}
+
+.pg-contact__card h3 {
+    margin: 0 0 0.3rem;
+    font-size: 1.25rem;
+    color: var(--tv-ink);
+}
+
+.pg-contact__card > p {
+    margin: 0 0 1.5rem;
+    font-size: 0.92rem;
+    color: var(--tv-ink-2);
+}
+
+.tv-form {
+    display: grid;
+    gap: 1.1rem;
+}
+
+.tv-field {
+    display: grid;
+    gap: 0.4rem;
+}
+
+.tv-field label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--tv-ink);
+}
+
+.tv-field input,
+.tv-field textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--tv-plata-300);
+    border-radius: var(--tv-radius-sm);
+    background: var(--tv-plata-50);
+    font: inherit;
+    font-size: 0.95rem;
+    color: var(--tv-ink);
+    transition: border-color 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+}
+
+.tv-field input::placeholder,
+.tv-field textarea::placeholder {
+    color: var(--tv-plata-500);
+}
+
+.tv-field input:focus,
+.tv-field textarea:focus {
+    outline: none;
+    border-color: var(--tv-rio);
+    background: var(--tv-white);
+    box-shadow: 0 0 0 3px var(--tv-rio-soft);
+}
+
+.tv-field--error input,
+.tv-field--error textarea {
+    border-color: #d64545;
+}
+
+.tv-field__error {
+    font-size: 0.82rem;
+    color: #c42f2f;
+}
+
+.tv-form__status {
+    margin: 0;
+    padding: 0.8rem 1rem;
+    border-radius: var(--tv-radius-sm);
+    background: var(--tv-bosque-soft);
+    color: var(--tv-bosque-deep);
+    font-size: 0.92rem;
+}
+
+.pg-contact__direct {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem 1.4rem;
+    align-items: center;
+    margin: 1.4rem 0 0;
+    padding-top: 1.2rem;
+    border-top: 1px dashed var(--tv-plata-300);
+    font-size: 0.9rem;
+    color: var(--tv-ink-2);
+}
+
+.pg-contact__direct svg {
+    flex: none;
+    vertical-align: -2px;
+    color: var(--tv-rio);
+}
+
+@media (max-width: 900px) {
+    .pg-contact__panel {
+        grid-template-columns: 1fr;
+        gap: 2.2rem;
+    }
+}
+
+@media (max-width: 620px) {
+    .pg-hero {
+        padding: 2.6rem 0 2.4rem;
+    }
+
+    .pg-grid,
+    .tv-reviews {
+        grid-template-columns: 1fr;
+    }
+
+    .pg-contact__card {
+        padding: 1.6rem 1.3rem;
+    }
+}

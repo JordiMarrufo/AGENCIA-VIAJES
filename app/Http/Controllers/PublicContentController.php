@@ -13,6 +13,29 @@ use Inertia\Response;
 
 class PublicContentController extends Controller
 {
+    public function home(): Response
+    {
+        $posts = TravelPost::where('is_published', true)->latest('published_at')->get();
+        $today = now()->startOfDay();
+
+        $upcoming = $posts->filter(function (TravelPost $post) use ($today): bool {
+            if ($post->category === 'past') {
+                return false;
+            }
+
+            return $post->starts_at === null || $post->starts_at->startOfDay()->gte($today);
+        })->sortBy('starts_at')->values();
+
+        $past = $posts->reject(function (TravelPost $post) use ($today): bool {
+            return $post->category !== 'past' && ($post->starts_at === null || $post->starts_at->startOfDay()->gte($today));
+        })->sortByDesc('starts_at')->values();
+
+        return Inertia::render('home', [
+            'upcomingPosts' => $upcoming,
+            'pastPosts' => $past,
+        ]);
+    }
+
     public function index(): Response
     {
         return Inertia::render('travel-content', [

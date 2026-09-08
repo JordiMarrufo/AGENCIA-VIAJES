@@ -1,143 +1,280 @@
 import { Head, Link, useForm } from '@inertiajs/react';
-import { FormEvent } from 'react';
-import '../../css/travel-content.css';
+import {
+    ArrowDown,
+    CheckCircle2,
+    Mail,
+    MapPin,
+    MessageSquare,
+    Phone,
+    Quote,
+    Send,
+    Star,
+} from 'lucide-react';
+import { FormEvent, useState } from 'react';
+import TravelCard from '@/components/public/travel-card';
+import type { QuoteData, ReviewData, TravelPostData } from '@/types/travel';
+import '../../css/travel/listing.css';
 
-type Post = {
-    id: number;
-    title: string;
-    category: string;
-    destination: string | null;
-    excerpt: string | null;
-    content: string;
-    price: string | null;
-    cover_image_url?: string | null;
+type TravelContentProps = {
+    posts: TravelPostData[];
+    reviews: ReviewData[];
+    quotes: QuoteData[];
 };
-type Review = {
-    id: number;
-    author_name: string;
-    destination: string | null;
-    rating: number;
-    content: string;
-};
-type Quote = { id: number; quote: string; author: string | null };
 
-export default function TravelContent({
-    posts,
-    reviews,
-    quotes,
-}: {
-    posts: Post[];
-    reviews: Review[];
-    quotes: Quote[];
-}) {
+export default function TravelContent({ posts, reviews, quotes }: TravelContentProps) {
     const form = useForm({ name: '', email: '', phone: '', message: '' });
+    const [sent, setSent] = useState(false);
+
     function submit(event: FormEvent) {
         event.preventDefault();
-        form.post('/contacto', { onSuccess: () => form.reset() });
+        form.post('/contacto', {
+            preserveScroll: true,
+            onSuccess: () => {
+                form.reset();
+                setSent(true);
+            },
+        });
     }
+
     return (
         <>
             <Head title="Viajes y experiencias" />
-            <main className="travel-page">
-                <header className="travel-page__hero">
-                    <p>Agencia de viajes</p>
-                    <h1>Viaja, descubre y crea recuerdos</h1>
-                    <span>
-                        Próximos destinos, promociones y experiencias
-                        compartidas.
-                    </span>
-                    <Link href="/">Volver al inicio</Link>
-                </header>
-                <section className="travel-page__section">
-                    <h2>Viajes y promociones</h2>
-                    <div className="travel-grid">
-                        {posts.map((post) => (
-                            <article className="travel-card" key={post.id}>
-                                {post.cover_image_url && (
-                                    <img
-                                        src={post.cover_image_url}
-                                        alt={post.title}
-                                    />
-                                )}
-                                <div>
-                                    <small>
-                                        {post.category} · {post.destination}
-                                    </small>
-                                    <h3>{post.title}</h3>
-                                    <p>{post.excerpt || post.content}</p>
-                                    {post.price && (
-                                        <strong>Desde ${post.price}</strong>
+
+            <main>
+                {/* CABECERA */}
+                <section className="pg-hero">
+                    <div className="tv-container pg-hero__inner">
+                        <p className="tv-eyebrow">Nuestros viajes</p>
+                        <h1>Viaja, descubre y crea recuerdos</h1>
+                        <p className="pg-hero__lead">
+                            Destinos entre playas, ríos, mares y bosques. Promociones,
+                            salidas grupales y experiencias a tu medida, siempre con el
+                            acompañamiento de un equipo que conoce cada rincón.
+                        </p>
+                        <div className="pg-hero__anchors">
+                            <a className="tv-chip tv-chip--mar" href="#destinos">
+                                Ver viajes
+                            </a>
+                            <a className="tv-chip tv-chip--rio" href="#resenas">
+                                Reseñas
+                            </a>
+                            <a className="tv-chip tv-chip--magenta" href="#contacto">
+                                Pedir información
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                {/* VIAJES */}
+                <section className="tv-section" id="destinos">
+                    <div className="tv-container">
+                        <div className="tv-section-head">
+                            <div>
+                                <p className="tv-eyebrow">Viajes y promociones</p>
+                                <h2 className="tv-title">Explora nuestras experiencias</h2>
+                                <p className="tv-lead">
+                                    Cada salida incluye hospedaje, traslados y una agenda
+                                    pensada para que disfrutes sin preocuparte por nada.
+                                </p>
+                            </div>
+                            <div className="tv-section-head__aside">
+                                <a className="tv-link-more" href="#contacto">
+                                    <ArrowDown size={16} aria-hidden="true" />
+                                    Solicitar más fechas
+                                </a>
+                            </div>
+                        </div>
+
+                        {posts.length ? (
+                            <div className="pg-grid">
+                                {posts.map((post) => (
+                                    <TravelCard key={post.id} post={post} />
+                                ))}
+                            </div>
+                        ) : (
+                            <p className="tv-empty">
+                                Estamos preparando nuestros próximos destinos. Escríbenos
+                                para recibir las primeras fechas y promociones disponibles.
+                            </p>
+                        )}
+                    </div>
+                </section>
+
+                {/* RESEÑAS */}
+                <section className="tv-section tv-section--soft" id="resenas">
+                    <div className="tv-container">
+                        <div className="tv-section-head">
+                            <div>
+                                <p className="tv-eyebrow">Reseñas</p>
+                                <h2 className="tv-title">Lo que dicen nuestros viajeros</h2>
+                                <p className="tv-lead">
+                                    Experiencias reales de quienes ya viajaron con la
+                                    agencia.
+                                </p>
+                            </div>
+                        </div>
+
+                        {reviews.length ? (
+                            <div className="tv-reviews">
+                                {reviews.map((review) => (
+                                    <article className="tv-review" key={review.id}>
+                                        <div className="tv-review__stars" role="img" aria-label={`${review.rating} de 5 estrellas`}>
+                                            {Array.from({ length: review.rating }).map((_, i) => (
+                                                <Star key={i} size={15} fill="currentColor" aria-hidden="true" />
+                                            ))}
+                                            <span>{review.rating} de 5</span>
+                                        </div>
+                                        <p className="tv-review__body">“{review.content}”</p>
+                                        <footer className="tv-review__author">
+                                            <strong>{review.author_name}</strong>
+                                            {review.destination && (
+                                                <span>
+                                                    <MapPin size={13} aria-hidden="true" />
+                                                    {review.destination}
+                                                </span>
+                                            )}
+                                        </footer>
+                                    </article>
+                                ))}
+                            </div>
+                        ) : (
+                            <p className="tv-empty">
+                                Muy pronto compartiremos las experiencias de nuestros
+                                viajeros.
+                            </p>
+                        )}
+
+                        {quotes.length > 0 && (
+                            <div className="tv-quotes" style={{ marginTop: '3.2rem' }}>
+                                {quotes.map((quote) => (
+                                    <div className="tv-quote" key={quote.id}>
+                                        <span className="tv-quote__mark">
+                                            <Quote size={22} aria-hidden="true" />
+                                        </span>
+                                        <blockquote>“{quote.quote}”</blockquote>
+                                        {quote.author && <cite>{quote.author}</cite>}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </section>
+
+                {/* CONTACTO */}
+                <section className="tv-section pg-contact" id="contacto">
+                    <div className="tv-container">
+                        <div className="pg-contact__panel">
+                            <div className="pg-contact__info">
+                                <p className="tv-eyebrow">Contacto</p>
+                                <h2>¿Listo para tu próximo viaje?</h2>
+                                <p>
+                                    Cuéntanos a dónde quieres ir, con quién y en qué fechas.
+                                    Armaremos una propuesta sin compromiso en menos de 24
+                                    horas.
+                                </p>
+                                <ul className="pg-contact__list">
+                                    <li>
+                                        <CheckCircle2 size={18} aria-hidden="true" />
+                                        Respuesta rápida, en menos de 24 horas
+                                    </li>
+                                    <li>
+                                        <CheckCircle2 size={18} aria-hidden="true" />
+                                        Asesoría personalizada, sin costo
+                                    </li>
+                                    <li>
+                                        <CheckCircle2 size={18} aria-hidden="true" />
+                                        Precios claros, sin cargos ocultos
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div className="pg-contact__card">
+                                <h3>Envíanos tu consulta</h3>
+                                <p>Completa el formulario y te contactaremos pronto.</p>
+                                <form className="tv-form" onSubmit={submit} noValidate>
+                                    <div className={`tv-field${form.errors.name ? ' tv-field--error' : ''}`}>
+                                        <label htmlFor="c-name">Nombre completo</label>
+                                        <input
+                                            id="c-name"
+                                            name="name"
+                                            placeholder="Tu nombre"
+                                            value={form.data.name}
+                                            onChange={(e) => form.setData('name', e.target.value)}
+                                            required
+                                        />
+                                        {form.errors.name && (
+                                            <p className="tv-field__error">{form.errors.name}</p>
+                                        )}
+                                    </div>
+                                    <div className={`tv-field${form.errors.email ? ' tv-field--error' : ''}`}>
+                                        <label htmlFor="c-email">Correo electrónico</label>
+                                        <input
+                                            id="c-email"
+                                            name="email"
+                                            type="email"
+                                            placeholder="tucorreo@ejemplo.com"
+                                            value={form.data.email}
+                                            onChange={(e) => form.setData('email', e.target.value)}
+                                            required
+                                        />
+                                        {form.errors.email && (
+                                            <p className="tv-field__error">{form.errors.email}</p>
+                                        )}
+                                    </div>
+                                    <div className={`tv-field${form.errors.phone ? ' tv-field--error' : ''}`}>
+                                        <label htmlFor="c-phone">Teléfono (opcional)</label>
+                                        <input
+                                            id="c-phone"
+                                            name="phone"
+                                            type="tel"
+                                            placeholder="+52 ..."
+                                            value={form.data.phone}
+                                            onChange={(e) => form.setData('phone', e.target.value)}
+                                        />
+                                        {form.errors.phone && (
+                                            <p className="tv-field__error">{form.errors.phone}</p>
+                                        )}
+                                    </div>
+                                    <div className={`tv-field${form.errors.message ? ' tv-field--error' : ''}`}>
+                                        <label htmlFor="c-message">Mensaje</label>
+                                        <textarea
+                                            id="c-message"
+                                            name="message"
+                                            rows={5}
+                                            placeholder="Cuéntanos a dónde quieres viajar..."
+                                            value={form.data.message}
+                                            onChange={(e) => form.setData('message', e.target.value)}
+                                            required
+                                        />
+                                        {form.errors.message && (
+                                            <p className="tv-field__error">{form.errors.message}</p>
+                                        )}
+                                    </div>
+                                    {sent && (
+                                        <p className="tv-form__status" role="status">
+                                            ¡Gracias por escribirnos! Te responderemos muy pronto.
+                                        </p>
                                     )}
-                                </div>
-                            </article>
-                        ))}
+                                    <button
+                                        type="submit"
+                                        className="tv-btn tv-btn--magenta"
+                                        disabled={form.processing}
+                                    >
+                                        {form.processing ? 'Enviando...' : 'Enviar mensaje'}
+                                        <Send size={16} aria-hidden="true" />
+                                    </button>
+                                </form>
+                                <p className="pg-contact__direct">
+                                    <Mail size={14} aria-hidden="true" />
+                                    hola@agenciaviajes.com
+                                    <Phone size={14} aria-hidden="true" />
+                                    +52 55 0000 0000
+                                    <MessageSquare size={14} aria-hidden="true" />
+                                    WhatsApp
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                </section>
-                <section className="travel-page__section">
-                    <h2>Lo que dicen nuestros viajeros</h2>
-                    <div className="travel-grid">
-                        {reviews.map((review) => (
-                            <article
-                                className="travel-card travel-card--review"
-                                key={review.id}
-                            >
-                                <small>
-                                    {'★'.repeat(review.rating)} ·{' '}
-                                    {review.destination}
-                                </small>
-                                <p>“{review.content}”</p>
-                                <strong>{review.author_name}</strong>
-                            </article>
-                        ))}
-                    </div>
-                </section>
-                <section className="travel-page__section travel-page__quotes">
-                    {quotes.map((quote) => (
-                        <blockquote key={quote.id}>
-                            “{quote.quote}”<cite>{quote.author}</cite>
-                        </blockquote>
-                    ))}
-                </section>
-                <section className="travel-page__section contact-panel">
-                    <h2>¿Listo para tu próximo viaje?</h2>
-                    <form onSubmit={submit} className="contact-form">
-                        <input
-                            placeholder="Nombre"
-                            value={form.data.name}
-                            onChange={(e) =>
-                                form.setData('name', e.target.value)
-                            }
-                            required
-                        />
-                        <input
-                            type="email"
-                            placeholder="Correo electrónico"
-                            value={form.data.email}
-                            onChange={(e) =>
-                                form.setData('email', e.target.value)
-                            }
-                            required
-                        />
-                        <input
-                            placeholder="Teléfono (opcional)"
-                            value={form.data.phone}
-                            onChange={(e) =>
-                                form.setData('phone', e.target.value)
-                            }
-                        />
-                        <textarea
-                            placeholder="Cuéntanos cómo podemos ayudarte"
-                            rows={5}
-                            value={form.data.message}
-                            onChange={(e) =>
-                                form.setData('message', e.target.value)
-                            }
-                            required
-                        />
-                        <button disabled={form.processing}>
-                            Enviar mensaje
-                        </button>
-                    </form>
                 </section>
             </main>
         </>
