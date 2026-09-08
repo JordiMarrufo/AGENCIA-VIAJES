@@ -352,21 +352,90 @@
 }
 
 .pg-contact__direct {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.7rem 1.4rem;
-    align-items: center;
     margin: 1.4rem 0 0;
     padding-top: 1.2rem;
     border-top: 1px dashed var(--tv-plata-300);
-    font-size: 0.9rem;
+}
+
+.pg-contact__direct-label {
+    display: block;
+    margin: 0 0 0.9rem;
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
     color: var(--tv-ink-2);
 }
 
-.pg-contact__direct svg {
+.pg-contact__channels {
+    display: grid;
+    gap: 0.6rem;
+}
+
+.pg-contact__channel {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid var(--tv-plata-200);
+    border-radius: var(--tv-radius-sm);
+    background: var(--tv-white);
+    text-decoration: none;
+    transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
+}
+
+.pg-contact__channel:hover {
+    border-color: var(--tv-rio);
+    box-shadow: var(--tv-shadow-sm);
+    transform: translateY(-1px);
+}
+
+.pg-contact__channel:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--tv-rio-soft);
+}
+
+.pg-contact__channel-ico {
     flex: none;
-    vertical-align: -2px;
-    color: var(--tv-rio);
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    color: var(--tv-white);
+}
+
+.pg-contact__channel-ico--mail {
+    background: var(--tv-mar);
+}
+
+.pg-contact__channel-ico--phone {
+    background: var(--tv-rio);
+}
+
+.pg-contact__channel-ico--whatsapp {
+    background: var(--tv-bosque);
+}
+
+.pg-contact__channel-txt {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.pg-contact__channel-txt small {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--tv-plata-500);
+}
+
+.pg-contact__channel-txt strong {
+    font-size: 0.92rem;
+    line-height: 1.3;
+    color: var(--tv-ink);
+    overflow-wrap: anywhere;
 }
 
 @media (max-width: 900px) {

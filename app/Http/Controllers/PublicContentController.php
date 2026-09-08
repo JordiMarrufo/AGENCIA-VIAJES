@@ -45,10 +45,17 @@ class PublicContentController extends Controller
 
     public function index(): Response
     {
+        $settings = SiteSetting::current();
+
         return Inertia::render('travel-content', [
             'posts' => TravelPost::where('is_published', true)->latest('published_at')->get(),
             'reviews' => Review::where('is_published', true)->latest()->get(),
             'quotes' => CompanyQuote::where('is_published', true)->latest()->get(),
+            'contact' => [
+                'email' => $settings->contact_email,
+                'phone' => $settings->contact_phone,
+                'whatsapp' => $settings->contact_whatsapp,
+            ],
         ]);
     }
 

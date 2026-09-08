@@ -26,6 +26,9 @@ class SiteController extends Controller
                 'logo_url' => $settings->logo_url,
                 'hero_subtitle' => $settings->hero_subtitle,
                 'hero_image_url' => $settings->hero_image_url,
+                'contact_email' => $settings->contact_email,
+                'contact_phone' => $settings->contact_phone,
+                'contact_whatsapp' => $settings->contact_whatsapp,
             ],
         ]);
     }
@@ -43,6 +46,9 @@ class SiteController extends Controller
             'hero_subtitle' => ['nullable', 'string', 'max:500'],
             'hero_image' => ['nullable', 'image', 'mimes:png,jpg,jpeg,webp', 'max:10240'],
             'remove_hero_image' => ['sometimes', 'boolean'],
+            'contact_email' => ['nullable', 'string', 'email', 'max:180'],
+            'contact_phone' => ['nullable', 'string', 'max:40'],
+            'contact_whatsapp' => ['nullable', 'string', 'max:40'],
         ]);
 
         $settings = SiteSetting::current();
@@ -66,6 +72,12 @@ class SiteController extends Controller
         $data['hero_subtitle'] = $request->filled('hero_subtitle')
             ? trim((string) $request->input('hero_subtitle'))
             : null;
+
+        foreach (['contact_email', 'contact_phone', 'contact_whatsapp'] as $field) {
+            $data[$field] = $request->filled($field)
+                ? trim((string) $request->input($field))
+                : null;
+        }
 
         unset($data['logo'], $data['remove_logo'], $data['hero_image'], $data['remove_hero_image']);
 

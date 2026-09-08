@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Head, Link, router, usePage } from '@inertiajs/react';
-import { Check, Eye, ExternalLink, ImagePlus, Palette, RefreshCw, Upload, X } from 'lucide-react';
+import { Check, Eye, ExternalLink, ImagePlus, Mail, Palette, RefreshCw, Upload, X } from 'lucide-react';
 import { settings } from '@/routes/admin';
 import { update } from '@/routes/admin/settings';
 import { home } from '@/routes';
@@ -12,6 +12,9 @@ type SettingsData = {
     logo_url: string | null;
     hero_subtitle: string;
     hero_image_url: string | null;
+    contact_email: string;
+    contact_phone: string;
+    contact_whatsapp: string;
 };
 
 type Props = {
@@ -34,6 +37,9 @@ export default function AdminSite({ settings: site, errors = {} }: Props) {
     const [heroSubtitle, setHeroSubtitle] = useState(site.hero_subtitle);
     const [heroFile, setHeroFile] = useState<File | null>(null);
     const [removeHeroImage, setRemoveHeroImage] = useState(false);
+    const [contactEmail, setContactEmail] = useState(site.contact_email);
+    const [contactPhone, setContactPhone] = useState(site.contact_phone);
+    const [contactWhatsapp, setContactWhatsapp] = useState(site.contact_whatsapp);
     const [busy, setBusy] = useState(false);
 
     const logoInput = useRef<HTMLInputElement | null>(null);
@@ -99,6 +105,9 @@ export default function AdminSite({ settings: site, errors = {} }: Props) {
         const payload: Record<string, string | boolean | File> = {
             site_name: name,
             hero_subtitle: heroSubtitle.trim(),
+            contact_email: contactEmail.trim(),
+            contact_phone: contactPhone.trim(),
+            contact_whatsapp: contactWhatsapp.trim(),
         };
         if (tagline.trim()) {
             payload.site_tagline = tagline.trim();
@@ -137,6 +146,9 @@ export default function AdminSite({ settings: site, errors = {} }: Props) {
         setHeroSubtitle(site.hero_subtitle);
         setHeroFile(null);
         setRemoveHeroImage(false);
+        setContactEmail(site.contact_email);
+        setContactPhone(site.contact_phone);
+        setContactWhatsapp(site.contact_whatsapp);
     };
 
     const previewName = name.trim() || 'Nombre del sitio';
@@ -592,6 +604,63 @@ export default function AdminSite({ settings: site, errors = {} }: Props) {
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section className="ad-fs" aria-label="Contacto">
+                                <header className="ad-fs__head">
+                                    <span className="ad-fs__ico ad-fs__ico--magenta">
+                                        <Mail size={18} aria-hidden="true" />
+                                    </span>
+                                    <div>
+                                        <h3>Contacto directo</h3>
+                                        <p>
+                                            Correo, teléfono y WhatsApp que se muestran en el
+                                            formulario de contacto.
+                                        </p>
+                                    </div>
+                                </header>
+
+                                <div className="ad-fs__body">
+                                    <div className="tv-form">
+                                        <div className="tv-field ad-span">
+                                            <label htmlFor="site-contact-email">Correo</label>
+                                            <input
+                                                id="site-contact-email"
+                                                type="email"
+                                                value={contactEmail}
+                                                maxLength={180}
+                                                onChange={(e) => setContactEmail(e.target.value)}
+                                                placeholder="hola@agenciaviajes.com"
+                                            />
+                                        </div>
+
+                                        <div className="tv-field ad-span">
+                                            <label htmlFor="site-contact-phone">Teléfono</label>
+                                            <input
+                                                id="site-contact-phone"
+                                                type="tel"
+                                                value={contactPhone}
+                                                maxLength={40}
+                                                onChange={(e) => setContactPhone(e.target.value)}
+                                                placeholder="+52 55 0000 0000"
+                                            />
+                                        </div>
+
+                                        <div className="tv-field ad-span">
+                                            <label htmlFor="site-contact-whatsapp">
+                                                WhatsApp (número con código de país)
+                                            </label>
+                                            <input
+                                                id="site-contact-whatsapp"
+                                                type="tel"
+                                                value={contactWhatsapp}
+                                                maxLength={40}
+                                                onChange={(e) => setContactWhatsapp(e.target.value)}
+                                                placeholder="+52 55 0000 0000"
+                                            />
                                         </div>
                                     </div>
                                 </div>
