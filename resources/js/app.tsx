@@ -8,10 +8,21 @@ import AuthLayout from '@/layouts/auth-layout';
 import PublicLayout from '@/layouts/public-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const fallbackAppName = import.meta.env.VITE_APP_NAME || 'Laravel';
+
+function resolveAppName(page: { props: unknown }): string {
+    const props = page.props as { site?: { name?: string | null } };
+    const siteName = props.site?.name?.trim();
+
+    return siteName || fallbackAppName;
+}
 
 void createInertiaApp({
-    title: (title) => (title ? `${title} - ${appName}` : appName),
+    title: (title, page) => {
+        const appName = resolveAppName(page);
+
+        return title ? `${title} - ${appName}` : appName;
+    },
     layout: (name) => {
         switch (true) {
             case name === 'home':
