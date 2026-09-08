@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CompanyQuote;
 use App\Models\ContactMessage;
 use App\Models\Review;
+use App\Models\SiteSetting;
 use App\Models\TravelPost;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -30,9 +31,15 @@ class PublicContentController extends Controller
             return $post->category !== 'past' && ($post->starts_at === null || $post->starts_at->startOfDay()->gte($today));
         })->sortByDesc('starts_at')->values();
 
+        $settings = SiteSetting::current();
+
         return Inertia::render('home', [
             'upcomingPosts' => $upcoming,
             'pastPosts' => $past,
+            'hero' => [
+                'subtitle' => $settings->hero_subtitle,
+                'image_url' => $settings->hero_image_url,
+            ],
         ]);
     }
 

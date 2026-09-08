@@ -12,14 +12,23 @@ import { categoryChip, categoryLabel, categoryTile, formatDate, travelDetailPath
 import type { TravelPostData } from '@/types/travel';
 import '../../css/travel/home.css';
 
+type HeroData = {
+    subtitle: string;
+    image_url: string | null;
+};
+
 type HomeProps = {
     upcomingPosts: TravelPostData[];
     pastPosts: TravelPostData[];
+    hero?: HeroData;
 };
 
-export default function Home({ upcomingPosts, pastPosts }: HomeProps) {
+const FALLBACK_HERO_SUB = 'Experiencias entre playas, ríos, mares y bosques, diseñadas para que solo te preocupes de disfrutar cada destino.';
+
+export default function Home({ upcomingPosts, pastPosts, hero }: HomeProps) {
     const scrollerRef = useRef<HTMLDivElement>(null);
-    const heroImage = upcomingPosts[0]?.cover_image_url ?? null;
+    const heroImage = hero?.image_url ?? upcomingPosts[0]?.cover_image_url ?? null;
+    const heroSub = hero?.subtitle?.trim() || FALLBACK_HERO_SUB;
 
     const scrollCarousel = (direction: 1 | -1) => {
         const track = scrollerRef.current;
@@ -50,10 +59,7 @@ export default function Home({ upcomingPosts, pastPosts }: HomeProps) {
                     <h1 className="pv-hero__title">
                         Descubre el mundo, <span className="accent">viaja contigo mismo</span>
                     </h1>
-                    <p className="pv-hero__sub">
-                        Experiencias entre playas, ríos, mares y bosques, diseñadas para
-                        que solo te preocupes de disfrutar cada destino.
-                    </p>
+                    <p className="pv-hero__sub">{heroSub}</p>
                     <div className="pv-hero__actions">
                         <a href="#proximos" className="tv-btn tv-btn--magenta">
                             Ver próximos viajes

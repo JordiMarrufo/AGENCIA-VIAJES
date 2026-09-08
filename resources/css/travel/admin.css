@@ -1904,6 +1904,91 @@
     font-weight: 600;
 }
 
+/* Portada del inicio: zona de imagen y vista previa lateral */
+.ad-hero-upload {
+    display: grid;
+    gap: 0.9rem;
+}
+
+.ad-hero-drop {
+    min-height: 250px;
+}
+
+.ad-hero-drop .ad-drop__img {
+    height: 260px;
+}
+
+.ad-hero-stage {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    min-height: 216px;
+    padding: 1.3rem 1.2rem;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 18% 18%, rgba(225, 41, 161, 0.1), transparent 45%),
+        radial-gradient(circle at 85% 12%, rgba(15, 163, 163, 0.16), transparent 46%),
+        linear-gradient(160deg, var(--tv-mar-deep), #073d5c);
+}
+
+.ad-hero-stage__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+}
+
+.ad-hero-stage__shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        0deg,
+        rgba(4, 30, 48, 0.86) 0%,
+        rgba(4, 30, 48, 0.32) 62%,
+        rgba(4, 30, 48, 0.4) 100%
+    );
+    pointer-events: none;
+}
+
+.ad-hero-stage__content {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 0.42rem;
+}
+
+.ad-hero-stage__eyebrow {
+    font-size: 0.56rem;
+    font-weight: 800;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--tv-white);
+    opacity: 0.92;
+}
+
+.ad-hero-stage__title {
+    display: block;
+    font-size: 0.98rem;
+    line-height: 1.2;
+    font-weight: 800;
+    color: var(--tv-white);
+}
+
+.ad-hero-stage__title em {
+    font-style: normal;
+    color: var(--tv-magenta);
+}
+
+.ad-hero-stage__sub {
+    margin: 0;
+    max-width: 26rem;
+    font-size: 0.74rem;
+    line-height: 1.42;
+    color: rgba(255, 255, 255, 0.92);
+}
+
 @media (max-width: 560px) {
     .ad-logo {
         flex-direction: column;

@@ -24,6 +24,8 @@ class SiteController extends Controller
                 'site_name' => $settings->site_name,
                 'site_tagline' => $settings->site_tagline,
                 'logo_url' => $settings->logo_url,
+                'hero_subtitle' => $settings->hero_subtitle,
+                'hero_image_url' => $settings->hero_image_url,
             ],
         ]);
     }
@@ -38,19 +40,34 @@ class SiteController extends Controller
             'site_tagline' => ['nullable', 'string', 'max:180'],
             'logo' => ['nullable', 'image', 'mimes:png,jpg,jpeg,webp', 'max:5120'],
             'remove_logo' => ['sometimes', 'boolean'],
+            'hero_subtitle' => ['nullable', 'string', 'max:500'],
+            'hero_image' => ['nullable', 'image', 'mimes:png,jpg,jpeg,webp', 'max:10240'],
+            'remove_hero_image' => ['sometimes', 'boolean'],
         ]);
 
         $settings = SiteSetting::current();
 
         if ($request->boolean('remove_logo') && ! $request->hasFile('logo')) {
-            $this->deleteLogo($settings->site_logo_path);
+            $this->deleteStoredFile($settings->site_logo_path);
             $data['site_logo_path'] = null;
         } elseif ($request->hasFile('logo')) {
-            $this->deleteLogo($settings->site_logo_path);
+            $this->deleteStoredFile($settings->site_logo_path);
             $data['site_logo_path'] = $request->file('logo')->store('site', 'public');
         }
 
-        unset($data['logo'], $data['remove_logo']);
+        if ($request->boolean('remove_hero_image') && ! $request->hasFile('hero_image')) {
+            $this->deleteStoredFile($settings->hero_image_path);
+            $data['hero_image_path'] = null;
+        } elseif ($request->hasFile('hero_image')) {
+            $this->deleteStoredFile($settings->hero_image_path);
+            $data['hero_image_path'] = $request->file('hero_image')->store('site', 'public');
+        }
+
+        $data['hero_subtitle'] = $request->filled('hero_subtitle')
+            ? trim((string) $request->input('hero_subtitle'))
+            : null;
+
+        unset($data['logo'], $data['remove_logo'], $data['hero_image'], $data['remove_hero_image']);
 
         $settings->update($data);
 
@@ -59,7 +76,7 @@ class SiteController extends Controller
         return back();
     }
 
-    private function deleteLogo(?string $path): void
+    private function deleteStoredFile(?string $path): void
     {
         if ($path !== null) {
             Storage::disk('public')->delete($path);
