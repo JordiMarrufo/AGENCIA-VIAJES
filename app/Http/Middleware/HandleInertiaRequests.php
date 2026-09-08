@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\SiteSetting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -35,6 +37,8 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $settings = SiteSetting::current();
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
@@ -42,6 +46,12 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            'site' => [
+                'name' => $settings->site_name,
+                'tagline' => $settings->site_tagline,
+                'logo_url' => $settings->site_logo_path ? Storage::disk('public')->url($settings->site_logo_path) : null,
+                'has_logo' => (bool) $settings->site_logo_path,
+            ],
         ];
     }
 }

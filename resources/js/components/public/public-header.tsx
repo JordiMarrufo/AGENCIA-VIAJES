@@ -1,7 +1,7 @@
 import { Link, usePage } from '@inertiajs/react';
 import { ArrowRight, Menu, X } from 'lucide-react';
 import { useState } from 'react';
-import BrandMark from '@/components/public/brand-mark';
+import SiteBrand from '@/components/site-brand';
 
 const NAV = [
     { label: 'Inicio', href: '/', anchor: false },
@@ -10,7 +10,7 @@ const NAV = [
 ] as const;
 
 export default function PublicHeader() {
-    const { url } = usePage();
+    const { url, props } = usePage();
     const [open, setOpen] = useState(false);
 
     const path = url.split('?')[0];
@@ -28,13 +28,11 @@ export default function PublicHeader() {
     return (
         <header className="pv-header">
             <div className="tv-container pv-header__inner">
-                <Link href="/" className="pv-brand" aria-label="Agencia de Viajes — Inicio">
-                    <BrandMark />
-                    <span className="pv-brand__name">
-                        <strong>Agencia de Viajes</strong>
-                        <em>Playa · Mar · Naturaleza</em>
-                    </span>
-                </Link>
+                <SiteBrand
+                    href="/"
+                    className="pv-brand"
+                    ariaLabel={`${props.site?.name ?? 'Agencia de Viajes'} — Inicio`}
+                />
 
                 <nav className="pv-nav" aria-label="Principal">
                     {NAV.map((item) => (

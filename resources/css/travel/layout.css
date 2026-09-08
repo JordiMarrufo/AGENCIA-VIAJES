@@ -63,6 +63,18 @@
     box-shadow: 0 8px 18px -8px rgba(225, 41, 161, 0.65);
 }
 
+/* Logo personalizado subido desde el panel */
+.pv-brand__logo {
+    flex: none;
+    border-radius: 15px;
+    object-fit: contain;
+    padding: 4px;
+    background: var(--tv-white);
+    border: 1px solid var(--tv-plata-300);
+    box-shadow: 0 8px 18px -10px rgba(225, 41, 161, 0.35);
+    box-sizing: border-box;
+}
+
 .pv-brand__name {
     display: flex;
     flex-direction: column;

@@ -1,6 +1,6 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { ArrowRight, MapPin } from 'lucide-react';
-import BrandMark from '@/components/public/brand-mark';
+import SiteBrand from '@/components/site-brand';
 
 const EXPLORE = [
     { label: 'Inicio', href: '/' },
@@ -10,19 +10,15 @@ const EXPLORE = [
 ];
 
 export default function PublicFooter() {
+    const { props } = usePage();
     const year = new Date().getFullYear();
+    const siteName = props.site?.name ?? 'Agencia de Viajes';
 
     return (
         <footer className="pv-footer">
             <div className="tv-container pv-footer__grid">
                 <div className="pv-footer__brand">
-                    <Link href="/" className="pv-footer__logo" aria-label="Agencia de Viajes — Inicio">
-                        <BrandMark />
-                        <span className="pv-brand__name">
-                            <strong>Agencia de Viajes</strong>
-                            <em>Playa · Mar · Naturaleza</em>
-                        </span>
-                    </Link>
+                    <SiteBrand href="/" className="pv-footer__logo" ariaLabel={`${siteName} — Inicio`} />
                     <p className="pv-footer__tagline">
                         Diseñamos experiencias de viaje entre el mar, los ríos y los
                         bosques para que solo te preocupes de disfrutar cada destino.
@@ -58,7 +54,7 @@ export default function PublicFooter() {
 
             <div className="pv-footer__bottom">
                 <div className="tv-container pv-footer__legal">
-                    <span>© {year} Agencia de Viajes. Todos los derechos reservados.</span>
+                    <span>© {year} {siteName}. Todos los derechos reservados.</span>
                     <span>Playas · Ríos · Mares · Bosques</span>
                 </div>
             </div>

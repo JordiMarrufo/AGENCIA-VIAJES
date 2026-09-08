@@ -1705,3 +1705,213 @@
         justify-content: center;
     }
 }
+
+/* ============================================================
+   Ajustes del sitio (nombre, eslogan y logo del encabezado)
+   ============================================================ */
+
+.ad-site-note {
+    margin: 0;
+    max-width: 26rem;
+    font-size: 0.82rem;
+    color: var(--tv-ink-2);
+}
+
+/* Zona cuadrada para arrastrar/soltar el logo */
+.ad-logo {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+}
+
+.ad-logo__zone {
+    position: relative;
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 124px;
+    height: 124px;
+    border: 1.5px dashed var(--tv-plata-400);
+    border-radius: var(--tv-radius-md);
+    background: var(--tv-white);
+    cursor: pointer;
+    overflow: hidden;
+    transition: border-color 0.16s ease, background-color 0.16s ease;
+}
+
+.ad-logo__zone:hover {
+    border-color: var(--tv-rio);
+}
+
+.ad-logo__zone.is-over {
+    border-color: var(--tv-magenta);
+    background: var(--tv-magenta-soft);
+}
+
+.ad-logo__zone.is-removed {
+    border-style: solid;
+    border-color: var(--tv-plata-300);
+    background: var(--tv-plata-50);
+    cursor: default;
+}
+
+.ad-logo__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.ad-logo__empty {
+    display: grid;
+    justify-items: center;
+    gap: 0.5rem;
+    padding: 0.9rem;
+    color: var(--tv-ink-2);
+    text-align: center;
+}
+
+.ad-logo__empty svg {
+    color: var(--tv-mar);
+}
+
+.ad-logo__empty span {
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+.ad-logo__preview {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+.ad-logo__meta {
+    min-width: 0;
+    display: grid;
+    gap: 0.55rem;
+}
+
+.ad-logo__meta strong {
+    font-size: 0.9rem;
+    color: var(--tv-ink);
+}
+
+.ad-logo__meta p {
+    margin: 0;
+    font-size: 0.78rem;
+    line-height: 1.45;
+    color: var(--tv-ink-2);
+}
+
+.ad-logo__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+}
+
+/* Vista previa del encabezado (lateral) */
+.ad-site-stage {
+    display: grid;
+    gap: 1.1rem;
+    padding: 1.7rem 1.2rem 1.5rem;
+    background:
+        radial-gradient(circle at 85% 15%, rgba(225, 41, 161, 0.12), transparent 42%),
+        radial-gradient(circle at 12% 95%, rgba(15, 163, 163, 0.18), transparent 48%),
+        linear-gradient(160deg, var(--tv-mar-deep), #073d5c);
+}
+
+.ad-site-stage__bar {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 14px 30px -16px rgba(4, 30, 48, 0.7);
+}
+
+.ad-site-stage__logo {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--tv-white);
+    border: 1px solid var(--tv-plata-300);
+}
+
+.ad-site-stage__logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.ad-site-stage__brand {
+    display: grid;
+    min-width: 0;
+    line-height: 1.05;
+}
+
+.ad-site-stage__brand strong {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--tv-mar-deep);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ad-site-stage__brand em {
+    font-style: normal;
+    font-size: 0.62rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    color: var(--tv-magenta);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ad-site-stage__ribbon {
+    height: 4px;
+    border-radius: var(--tv-radius-pill);
+    background: var(--tv-grad-ribbon);
+}
+
+.ad-site-stage__nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.ad-site-stage__nav span {
+    padding: 0.26rem 0.7rem;
+    border-radius: var(--tv-radius-pill);
+    background: rgba(255, 255, 255, 0.14);
+    color: var(--tv-white);
+    font-size: 0.72rem;
+    font-weight: 600;
+}
+
+@media (max-width: 560px) {
+    .ad-logo {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .ad-logo__zone {
+        width: 132px;
+        height: 132px;
+    }
+}

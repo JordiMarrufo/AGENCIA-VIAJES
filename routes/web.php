@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ContentController;
+use App\Http\Controllers\Admin\SiteController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PublicContentController;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    // Ajustes del sitio (nombre del encabezado y logo)
+    Route::get('sitio', [SiteController::class, 'edit'])->name('settings');
+    Route::post('sitio', [SiteController::class, 'update'])->name('settings.update');
+
     // Viajes / publicaciones
     Route::get('viajes', [ContentController::class, 'posts'])->name('posts');
     Route::post('viajes', [ContentController::class, 'storePost'])->name('posts.store');

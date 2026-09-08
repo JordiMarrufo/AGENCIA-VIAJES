@@ -7,11 +7,12 @@ import {
     LogOut,
     MessageSquareQuote,
     Plane,
+    Settings,
     Star,
 } from 'lucide-react';
-import BrandMark from '@/components/public/brand-mark';
+import SiteBrand from '@/components/site-brand';
 import { dashboard } from '@/routes';
-import { contacts, posts, quotes, reviews } from '@/routes/admin';
+import { contacts, posts, quotes, reviews, settings } from '@/routes/admin';
 import { home, logout } from '@/routes';
 import type { Auth } from '@/types';
 import '../../css/travel/tokens.css';
@@ -55,28 +56,30 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             href: contacts().url,
             icon: <Inbox size={17} aria-hidden="true" />,
         },
+        {
+            label: 'Sitio',
+            href: settings().url,
+            icon: <Settings size={17} aria-hidden="true" />,
+        },
     ];
 
     const isActive = (href: string): boolean =>
         path === href || path.startsWith(`${href}/`);
 
     const user = props.auth?.user;
+    const siteName = (props as { site?: { name?: string } }).site?.name ?? 'Agencia de Viajes';
 
     return (
         <div className="ad-root">
             <header className="ad-header">
                 <div className="tv-container ad-header__inner">
-                    <Link
-                        href={dashboard()}
+                    <SiteBrand
+                        href={dashboard().url}
                         className="pv-brand"
-                        aria-label="Agencia de Viajes — Panel de administración"
-                    >
-                        <BrandMark size={42} />
-                        <span className="pv-brand__name">
-                            <strong>Agencia de Viajes</strong>
-                            <em>Panel de administración</em>
-                        </span>
-                    </Link>
+                        logoSize={42}
+                        subtitle="Panel de administración"
+                        ariaLabel={`${siteName} — Panel de administración`}
+                    />
 
                     <div className="ad-header__right">
                         <nav className="ad-nav" aria-label="Panel de administración">
