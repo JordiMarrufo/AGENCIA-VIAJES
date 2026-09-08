@@ -64,7 +64,6 @@ const CATEGORY_LABELS: Record<string, string> = {
     past: 'Viaje pasado',
     promotion: 'Promoción',
     offer: 'Oferta',
-    combo: 'Combo',
 };
 
 const CATEGORY_TONES: Record<string, string> = {
@@ -72,7 +71,6 @@ const CATEGORY_TONES: Record<string, string> = {
     past: 'tv-chip--plata',
     promotion: 'tv-chip--magenta',
     offer: 'tv-chip--bosque',
-    combo: 'tv-chip--mar',
 };
 
 /* Color de relleno de las pastillas de categoría del formulario */
@@ -81,7 +79,6 @@ const PILL_TONES: Record<string, string> = {
     past: 'plata',
     promotion: 'magenta',
     offer: 'bosque',
-    combo: 'mar',
 };
 
 const EMPTY: Fields = {
@@ -500,8 +497,8 @@ export default function AdminPosts({ posts: records, errors = {} }: Props) {
                         <h1>Viajes y paquetes</h1>
                         <p>
                             Administra los viajes que se muestran en la página
-                            principal: próximos destinos, viajes pasados, promociones,
-                            ofertas y combos.
+                            principal: próximos destinos, viajes pasados, promociones
+                            y ofertas.
                         </p>
                     </div>
                     <div className="ad-toolbar">

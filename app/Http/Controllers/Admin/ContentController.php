@@ -30,7 +30,7 @@ class ContentController extends Controller
 
         $data = $request->validate([
             'title' => ['required', 'string', 'max:180'],
-            'category' => ['required', 'in:upcoming,past,promotion,offer,combo'],
+            'category' => ['required', 'in:upcoming,past,promotion,offer'],
             'destination' => ['nullable', 'string', 'max:180'],
             'excerpt' => ['nullable', 'string', 'max:500'],
             'content' => ['required', 'string'],
@@ -65,7 +65,7 @@ class ContentController extends Controller
 
         $data = $request->validate([
             'title' => ['required', 'string', 'max:180'],
-            'category' => ['required', 'in:upcoming,past,promotion,offer,combo'],
+            'category' => ['required', 'in:upcoming,past,promotion,offer'],
             'destination' => ['nullable', 'string', 'max:180'],
             'excerpt' => ['nullable', 'string', 'max:500'],
             'content' => ['required', 'string'],

@@ -10,7 +10,6 @@ const CATEGORY_META: Record<TravelCategory, { label: string; chip: string; tile:
     past: { label: 'Viajes anteriores', chip: 'tv-chip--rio', tile: 'pv-tile--bosque' },
     promotion: { label: 'Promoción', chip: 'tv-chip--magenta', tile: 'pv-tile--magenta' },
     offer: { label: 'Oferta', chip: 'tv-chip--rio', tile: 'pv-tile--rio' },
-    combo: { label: 'Combo', chip: 'tv-chip--bosque', tile: 'pv-tile--bosque' },
 };
 
 export function categoryLabel(category: string): string {

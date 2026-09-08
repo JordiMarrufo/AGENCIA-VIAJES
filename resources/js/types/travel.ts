@@ -2,8 +2,7 @@ export type TravelCategory =
     | 'upcoming'
     | 'past'
     | 'promotion'
-    | 'offer'
-    | 'combo';
+    | 'offer';
 
 export type TravelPostData = {
     id: number;

@@ -78,7 +78,7 @@ export default function Home({ upcomingPosts, pastPosts }: HomeProps) {
                             <p className="tv-eyebrow">Próximos viajes</p>
                             <h2 className="tv-title">Destinos que te están esperando</h2>
                             <p className="tv-lead">
-                                Salidas próximas, promociones y combos para planear con
+                                Salidas próximas, promociones y ofertas para planear con
                                 tiempo tu siguiente escapada.
                             </p>
                         </div>
