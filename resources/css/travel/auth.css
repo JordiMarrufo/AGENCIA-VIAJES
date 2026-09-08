@@ -1,0 +1,302 @@
+/* ============================================================
+   AGENCIA DE VIAJES — Autenticación (login y accesos)
+   ============================================================ */
+
+.au-root {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    background: var(--tv-plata-50);
+    color: var(--tv-ink);
+    font-family: var(--tv-font);
+}
+
+/* Panel lateral decorativo (mar → río → bosque) */
+.au-art {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    color: var(--tv-white);
+    background: var(--tv-grad-deep);
+}
+
+/* Fondo: olas + brillo de marca */
+.au-art::before,
+.au-art::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.au-art::before {
+    width: 520px;
+    height: 520px;
+    right: -180px;
+    top: -140px;
+    background: radial-gradient(circle at 30% 30%, rgba(15, 163, 163, 0.4), transparent 62%);
+}
+
+.au-art::after {
+    width: 360px;
+    height: 360px;
+    left: -130px;
+    bottom: -120px;
+    background: radial-gradient(circle at 60% 40%, rgba(225, 41, 161, 0.32), transparent 64%);
+}
+
+.au-art__waves {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -6px;
+    width: 100%;
+    height: auto;
+    color: var(--tv-plata-50);
+    pointer-events: none;
+    opacity: 0.9;
+}
+
+.au-art__inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    min-height: 100%;
+}
+
+.au-art__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    color: var(--tv-white);
+    text-decoration: none;
+    width: fit-content;
+}
+
+.au-art__brand .pv-brand__name strong {
+    color: var(--tv-white);
+}
+
+.au-art__brand .pv-brand__name em {
+    color: #ffd1ef;
+}
+
+.au-art__copy {
+    margin: auto 0;
+    max-width: 540px;
+}
+
+.au-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 0 1rem;
+    font-size: 0.74rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.26em;
+    color: #ffe1f6;
+}
+
+.au-eyebrow::before {
+    content: '';
+    width: 26px;
+    height: 3px;
+    border-radius: var(--tv-radius-pill);
+    background: var(--tv-grad-magenta);
+}
+
+.au-art__copy h2 {
+    margin: 0;
+    font-size: clamp(1.8rem, 3.4vw, 2.7rem);
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+}
+
+.au-art__copy p {
+    margin: 1rem 0 0;
+    font-size: 1.02rem;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.82);
+    max-width: 460px;
+}
+
+.au-art__points {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.4rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.au-art__points li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.au-art__points svg {
+    color: #7ff0e6;
+}
+
+/* Columna del formulario */
+.au-main {
+    display: grid;
+    place-items: center;
+    padding: clamp(1.5rem, 4vw, 3rem);
+}
+
+.au-card {
+    width: min(100%, 440px);
+    background: var(--tv-white);
+    border: 1px solid var(--tv-plata-300);
+    border-radius: var(--tv-radius-lg);
+    box-shadow: var(--tv-shadow-md);
+    padding: clamp(1.6rem, 3vw, 2.4rem);
+}
+
+.au-card__brand {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-bottom: 1.4rem;
+    text-decoration: none;
+    color: var(--tv-ink);
+}
+
+.au-card__head {
+    margin-bottom: 1.6rem;
+    text-align: center;
+}
+
+.au-card__head h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--tv-mar-ink);
+}
+
+.au-card__head p {
+    margin: 0.5rem auto 0;
+    max-width: 340px;
+    font-size: 0.93rem;
+    line-height: 1.55;
+    color: var(--tv-ink-2);
+}
+
+/* Estado global (mensajes tipo "hemos enviado el enlace") */
+.au-status {
+    margin: 0 0 1rem;
+    padding: 0.8rem 1rem;
+    border-radius: var(--tv-radius-sm);
+    background: var(--tv-bosque-soft);
+    color: var(--tv-bosque-deep);
+    font-size: 0.92rem;
+    text-align: center;
+}
+
+/* Pie del card */
+.au-card__foot {
+    margin-top: 1.4rem;
+    text-align: center;
+    font-size: 0.88rem;
+    color: var(--tv-ink-2);
+}
+
+.au-card__foot a {
+    color: var(--tv-magenta-deep);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.au-card__foot a:hover {
+    text-decoration: underline;
+}
+
+/* Recordar sesión (checkbox nativo estilizado) */
+.au-remember {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.9rem;
+    color: var(--tv-ink-2);
+    cursor: pointer;
+}
+
+.au-remember input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--tv-magenta);
+    cursor: pointer;
+}
+
+.au-actions {
+    display: grid;
+    gap: 0.4rem;
+}
+
+.au-forgot {
+    margin-left: auto;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--tv-mar);
+    text-decoration: none;
+}
+
+.au-forgot:hover {
+    color: var(--tv-magenta);
+    text-decoration: underline;
+}
+
+.au-field-top {
+    display: flex;
+    align-items: center;
+}
+
+.au-field-top label {
+    margin: 0;
+}
+
+.au-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-top-color: var(--tv-white);
+    border-radius: 50%;
+    animation: au-spin 0.7s linear infinite;
+}
+
+@keyframes au-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 920px) {
+    .au-root {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .au-art {
+        display: none;
+    }
+
+    .au-card__brand {
+        display: inline-flex;
+    }
+}

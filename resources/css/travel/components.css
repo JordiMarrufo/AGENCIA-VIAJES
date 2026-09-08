@@ -161,6 +161,46 @@
     background: var(--tv-mar-soft);
 }
 
+/* Tamaños y variantes de apoyo */
+.tv-btn--sm {
+    padding: 0.52rem 1rem;
+    font-size: 0.85rem;
+    gap: 0.4rem;
+}
+
+.tv-btn--xs {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+    gap: 0.35rem;
+}
+
+.tv-btn--danger {
+    background: var(--tv-white);
+    color: #c42f2f;
+    border-color: #f0c9c9;
+}
+
+.tv-btn--danger:hover {
+    background: #fdf1f1;
+    border-color: #e3a6a6;
+}
+
+.tv-btn--soft {
+    background: var(--tv-plata-100);
+    color: var(--tv-mar-deep);
+    border-color: var(--tv-plata-300);
+}
+
+.tv-btn--soft:hover {
+    background: var(--tv-plata-200);
+}
+
+.tv-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+}
+
 /* ------------------------------------------------------------
    Chips / badges de categoría
    ------------------------------------------------------------ */
@@ -196,6 +236,12 @@
 .tv-chip--bosque {
     color: var(--tv-bosque-deep);
     background: var(--tv-bosque-soft);
+}
+
+.tv-chip--plata {
+    color: var(--tv-ink-2);
+    background: var(--tv-plata-100);
+    border: 1px solid var(--tv-plata-300);
 }
 
 /* ------------------------------------------------------------
