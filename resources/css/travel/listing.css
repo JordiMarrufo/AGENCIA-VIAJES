@@ -98,6 +98,32 @@
     pointer-events: none;
 }
 
+.tv-review--media::before {
+    display: none;
+}
+
+.tv-review__media {
+    margin: 0;
+    border-radius: var(--tv-radius-sm);
+    overflow: hidden;
+    background: var(--tv-plata-200);
+    line-height: 0;
+}
+
+.tv-review__media img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+}
+
+.tv-review__media video {
+    display: block;
+    width: 100%;
+    max-height: 340px;
+    background: var(--tv-ink);
+}
+
 .tv-review__stars {
     display: inline-flex;
     gap: 0.2rem;

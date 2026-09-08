@@ -26,6 +26,8 @@ export type ReviewData = {
     destination: string | null;
     rating: number;
     content: string;
+    photo_url: string | null;
+    video_url: string | null;
 };
 
 export type QuoteData = {

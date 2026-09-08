@@ -117,7 +117,35 @@ export default function TravelContent({ posts, reviews, quotes }: TravelContentP
                         {reviews.length ? (
                             <div className="tv-reviews">
                                 {reviews.map((review) => (
-                                    <article className="tv-review" key={review.id}>
+                                    <article
+                                        className={
+                                            review.photo_url || review.video_url
+                                                ? 'tv-review tv-review--media'
+                                                : 'tv-review'
+                                        }
+                                        key={review.id}
+                                    >
+                                        {review.photo_url && !review.video_url && (
+                                            <figure className="tv-review__media">
+                                                <img
+                                                    src={review.photo_url}
+                                                    alt={`${review.destination ? `${review.destination} · ` : ''}foto compartida por ${review.author_name}`}
+                                                    loading="lazy"
+                                                />
+                                            </figure>
+                                        )}
+
+                                        {review.video_url && (
+                                            <figure className="tv-review__media tv-review__media--video">
+                                                <video
+                                                    src={review.video_url}
+                                                    poster={review.photo_url ?? undefined}
+                                                    controls
+                                                    preload="metadata"
+                                                />
+                                            </figure>
+                                        )}
+
                                         <div className="tv-review__stars" role="img" aria-label={`${review.rating} de 5 estrellas`}>
                                             {Array.from({ length: review.rating }).map((_, i) => (
                                                 <Star key={i} size={15} fill="currentColor" aria-hidden="true" />
