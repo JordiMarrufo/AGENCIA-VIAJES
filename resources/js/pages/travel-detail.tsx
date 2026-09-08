@@ -104,50 +104,52 @@ export default function TravelDetail({ post, recommendedPosts }: DetailProps) {
                     />
                 )}
                 <div className="pd-hero__shade" aria-hidden="true" />
-                <div className="tv-container pd-hero__content">
-                    <nav className="pd-crumb" aria-label="Ruta de navegación">
-                        <Link href="/">Inicio</Link>
-                        <span aria-hidden="true">/</span>
-                        <Link href="/viajes">Viajes</Link>
-                        <span aria-hidden="true">/</span>
-                        <span className="pd-crumb__current">{post.title}</span>
-                    </nav>
-                    <span className={`tv-chip ${categoryChip(post.category)}`}>
-                        {categoryLabel(post.category)}
-                    </span>
-                    {post.destination && (
-                        <p className="pd-hero__place">
-                            <MapPin size={18} aria-hidden="true" />
-                            {post.destination}
-                        </p>
-                    )}
-                    <h1>{post.title}</h1>
-                    <p className="pd-hero__excerpt">{post.excerpt || plainLead}</p>
-                    <div className="pd-hero__facts">
-                        {range && (
-                            <span>
-                                <Calendar size={16} aria-hidden="true" />
-                                {range}
-                            </span>
+                <div className="tv-container">
+                    <div className="pd-hero__content">
+                        <nav className="pd-crumb" aria-label="Ruta de navegación">
+                            <Link href="/">Inicio</Link>
+                            <span aria-hidden="true">/</span>
+                            <Link href="/viajes">Viajes</Link>
+                            <span aria-hidden="true">/</span>
+                            <span className="pd-crumb__current">{post.title}</span>
+                        </nav>
+                        <span className={`tv-chip ${categoryChip(post.category)}`}>
+                            {categoryLabel(post.category)}
+                        </span>
+                        {post.destination && (
+                            <p className="pd-hero__place">
+                                <MapPin size={18} aria-hidden="true" />
+                                {post.destination}
+                            </p>
                         )}
-                        {nights && (
-                            <span>
-                                <Clock size={16} aria-hidden="true" />
-                                {nights}
-                            </span>
-                        )}
-                        {price && (
-                            <span>
-                                <Zap size={16} aria-hidden="true" />
-                                {price}
-                            </span>
-                        )}
-                    </div>
-                    <div className="pd-hero__actions">
-                        <a href="/viajes#contacto" className="tv-btn tv-btn--magenta">
-                            Quiero reservar este viaje
-                            <ArrowRight size={17} aria-hidden="true" />
-                        </a>
+                        <h1>{post.title}</h1>
+                        <p className="pd-hero__excerpt">{post.excerpt || plainLead}</p>
+                        <div className="pd-hero__facts">
+                            {range && (
+                                <span>
+                                    <Calendar size={16} aria-hidden="true" />
+                                    {range}
+                                </span>
+                            )}
+                            {nights && (
+                                <span>
+                                    <Clock size={16} aria-hidden="true" />
+                                    {nights}
+                                </span>
+                            )}
+                            {price && (
+                                <span>
+                                    <Zap size={16} aria-hidden="true" />
+                                    {price}
+                                </span>
+                            )}
+                        </div>
+                        <div className="pd-hero__actions">
+                            <a href="/viajes#contacto" className="tv-btn tv-btn--magenta">
+                                Quiero reservar este viaje
+                                <ArrowRight size={17} aria-hidden="true" />
+                            </a>
+                        </div>
                     </div>
                 </div>
             </section>

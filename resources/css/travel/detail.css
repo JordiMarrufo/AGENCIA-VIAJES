@@ -34,7 +34,6 @@
     flex-direction: column;
     align-items: flex-start;
     max-width: 860px;
-    margin-inline: 0 auto;
 }
 
 .pd-crumb {
