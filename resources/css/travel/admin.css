@@ -847,6 +847,560 @@
     font-size: 0.88rem;
 }
 
+/* ------------------------------------------------------------
+   Formulario de viajes rediseñado (crear / editar)
+   ------------------------------------------------------------ */
+
+/* Permite que la vista previa lateral se mantenga fija al hacer scroll */
+.ad-panel--edit {
+    overflow: visible;
+}
+
+.ad-panel__head--edit {
+    border-radius: calc(var(--tv-radius-md) - 1px) calc(var(--tv-radius-md) - 1px) 0 0;
+}
+
+.ad-panel__head--edit > div {
+    min-width: 0;
+}
+
+.ad-panel__sub {
+    margin: 0.25rem 0 0;
+    font-size: 0.85rem;
+    color: var(--tv-ink-2);
+}
+
+/* Campos de formulario asegurados dentro del panel admin
+   (se re-declaran para no depender de listing.css) */
+.ad-panel .tv-form {
+    display: grid;
+    gap: 1.1rem;
+}
+
+.ad-panel .tv-field {
+    display: grid;
+    gap: 0.4rem;
+}
+
+.ad-panel .tv-field label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--tv-ink);
+}
+
+.ad-panel .tv-field :where(
+    input:not([type='radio']):not([type='checkbox']):not([type='file']):not(.ad-drop__input),
+    textarea
+) {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--tv-plata-300);
+    border-radius: var(--tv-radius-sm);
+    background: var(--tv-plata-50);
+    font-family: var(--tv-font);
+    font-size: 0.95rem;
+    color: var(--tv-ink);
+    transition: border-color 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+}
+
+.ad-panel .tv-field :where(
+    input:not([type='radio']):not([type='checkbox']):not([type='file']):not(.ad-drop__input),
+    textarea
+)::placeholder {
+    color: var(--tv-plata-500);
+}
+
+.ad-panel .tv-field :where(
+    input:not([type='radio']):not([type='checkbox']):not([type='file']):not(.ad-drop__input),
+    textarea
+):focus {
+    outline: none;
+    border-color: var(--tv-rio);
+    background: var(--tv-white);
+    box-shadow: 0 0 0 3px var(--tv-rio-soft);
+}
+
+/* Rejilla principal: contenido + vista previa lateral */
+.ad-edit {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: 1.6rem;
+    align-items: start;
+}
+
+.ad-edit__main {
+    display: grid;
+    gap: 1.15rem;
+    align-content: start;
+    min-width: 0;
+}
+
+.ad-edit__side {
+    position: sticky;
+    top: 1.2rem;
+    min-width: 0;
+}
+
+/* Secciones agrupadas del formulario */
+.ad-fs {
+    background: var(--tv-plata-50);
+    border: 1px solid var(--tv-plata-200);
+    border-radius: var(--tv-radius-md);
+    overflow: hidden;
+}
+
+.ad-fs__head {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 1rem 1.2rem;
+    border-bottom: 1px solid var(--tv-plata-200);
+    background: var(--tv-white);
+}
+
+.ad-fs__ico {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    flex: none;
+}
+
+.ad-fs__ico--mar {
+    background: var(--tv-mar-soft);
+    color: var(--tv-mar);
+}
+
+.ad-fs__ico--rio {
+    background: var(--tv-rio-soft);
+    color: var(--tv-rio-deep);
+}
+
+.ad-fs__ico--magenta {
+    background: var(--tv-magenta-soft);
+    color: var(--tv-magenta-deep);
+}
+
+.ad-fs__head h3 {
+    margin: 0;
+    font-size: 0.98rem;
+    font-weight: 800;
+    color: var(--tv-mar-ink);
+}
+
+.ad-fs__head p {
+    margin: 0.15rem 0 0;
+    font-size: 0.8rem;
+    color: var(--tv-ink-2);
+}
+
+.ad-fs__body {
+    padding: 1.2rem;
+}
+
+/* Selector de categoría en forma de pastillas de color */
+.ad-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+}
+
+.ad-pill {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1rem;
+    border: 1px solid var(--tv-plata-300);
+    border-radius: var(--tv-radius-pill);
+    background: var(--tv-white);
+    font-family: var(--tv-font);
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--tv-ink);
+    cursor: pointer;
+    user-select: none;
+    transition: border-color 0.16s ease, background-color 0.16s ease, box-shadow 0.16s ease, color 0.16s ease;
+}
+
+.ad-pill input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    pointer-events: none;
+}
+
+.ad-pill:hover {
+    border-color: var(--tv-plata-400);
+}
+
+.ad-pill__dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex: none;
+}
+
+/* Tonos de cada pastilla (alineados con las chips de la lista) */
+.ad-pill--mar .ad-pill__dot {
+    background: var(--tv-mar);
+}
+.ad-pill--mar.is-checked {
+    background: var(--tv-mar-soft);
+    border-color: var(--tv-mar);
+    color: var(--tv-mar-deep);
+}
+
+.ad-pill--rio .ad-pill__dot {
+    background: var(--tv-rio);
+}
+.ad-pill--rio.is-checked {
+    background: var(--tv-rio-soft);
+    border-color: var(--tv-rio);
+    color: var(--tv-rio-deep);
+}
+
+.ad-pill--bosque .ad-pill__dot {
+    background: var(--tv-bosque);
+}
+.ad-pill--bosque.is-checked {
+    background: var(--tv-bosque-soft);
+    border-color: var(--tv-bosque);
+    color: var(--tv-bosque-deep);
+}
+
+.ad-pill--magenta .ad-pill__dot {
+    background: var(--tv-magenta);
+}
+.ad-pill--magenta.is-checked {
+    background: var(--tv-magenta-soft);
+    border-color: var(--tv-magenta);
+    color: var(--tv-magenta-ink);
+}
+
+.ad-pill--plata .ad-pill__dot {
+    background: var(--tv-plata-500);
+}
+.ad-pill--plata.is-checked {
+    background: var(--tv-plata-100);
+    border-color: var(--tv-plata-500);
+    color: var(--tv-ink);
+}
+
+/* Campo con prefijo monetario */
+.ad-input-ico {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.ad-input-ico > span {
+    position: absolute;
+    left: 1rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--tv-plata-500);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.ad-panel .ad-input-ico input {
+    padding-left: 2.15rem;
+}
+
+/* Zonas para arrastrar y soltar archivos */
+.ad-drop {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed var(--tv-plata-400);
+    border-radius: var(--tv-radius-md);
+    background: var(--tv-white);
+    cursor: pointer;
+    overflow: hidden;
+    text-align: center;
+    transition: border-color 0.16s ease, background-color 0.16s ease;
+}
+
+.ad-drop:hover {
+    border-color: var(--tv-rio);
+}
+
+.ad-drop.is-over {
+    border-color: var(--tv-magenta);
+    background: var(--tv-magenta-soft);
+}
+
+.ad-drop--image {
+    min-height: 300px;
+}
+
+.ad-drop--video {
+    min-height: 150px;
+}
+
+.ad-drop.has-media,
+.ad-drop.has-file {
+    border-style: solid;
+    border-color: var(--tv-bosque);
+}
+
+.ad-drop__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.ad-drop__prompt {
+    display: grid;
+    justify-items: center;
+    gap: 0.55rem;
+    padding: 1.4rem 1.1rem;
+    color: var(--tv-ink);
+}
+
+.ad-drop__ico {
+    display: grid;
+    place-items: center;
+    width: 54px;
+    height: 54px;
+    margin-bottom: 0.15rem;
+    border-radius: 50%;
+    background: var(--tv-mar-soft);
+    color: var(--tv-mar);
+}
+
+.ad-drop--video .ad-drop__ico {
+    background: var(--tv-magenta-soft);
+    color: var(--tv-magenta-deep);
+}
+
+.ad-drop__prompt strong {
+    font-size: 0.98rem;
+}
+
+.ad-drop__hint {
+    max-width: 26rem;
+    font-size: 0.8rem;
+    color: var(--tv-ink-2);
+}
+
+.ad-drop__img {
+    display: block;
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+}
+
+.ad-drop__overlay {
+    position: absolute;
+    inset: auto 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    padding: 1.1rem 0.8rem 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--tv-white);
+    background: linear-gradient(0deg, rgba(6, 41, 63, 0.82), rgba(6, 41, 63, 0) 70%);
+    pointer-events: none;
+}
+
+.ad-drop__clear {
+    position: absolute;
+    top: 0.7rem;
+    right: 0.7rem;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(23, 49, 64, 0.8);
+    color: var(--tv-white);
+    cursor: pointer;
+    transition: transform 0.14s ease, background-color 0.14s ease;
+}
+
+.ad-drop__clear:hover {
+    background: #d64545;
+    transform: scale(1.06);
+}
+
+.ad-drop__current {
+    position: absolute;
+    left: 0.8rem;
+    bottom: 0.7rem;
+    max-width: calc(100% - 1.6rem);
+    padding: 0.28rem 0.65rem;
+    border-radius: var(--tv-radius-pill);
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--tv-ink-2);
+    font-size: 0.74rem;
+    font-weight: 700;
+    box-shadow: var(--tv-shadow-sm);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Pie del formulario: publicación + acciones */
+.ad-edit__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.1rem 0 0.2rem;
+    border-top: 1px solid var(--tv-plata-200);
+}
+
+.ad-edit__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    justify-content: flex-end;
+}
+
+/* Interruptor de publicación */
+.ad-switch {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    cursor: pointer;
+}
+
+.ad-switch input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    pointer-events: none;
+}
+
+.ad-switch__track {
+    position: relative;
+    width: 46px;
+    height: 26px;
+    border-radius: var(--tv-radius-pill);
+    background: var(--tv-plata-400);
+    flex: none;
+    transition: background-color 0.18s ease;
+}
+
+.ad-switch__knob {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--tv-white);
+    box-shadow: 0 1px 3px rgba(6, 41, 63, 0.3);
+    transition: transform 0.18s ease;
+}
+
+.ad-switch input:checked + .ad-switch__track {
+    background: var(--tv-bosque);
+}
+
+.ad-switch input:checked + .ad-switch__track .ad-switch__knob {
+    transform: translateX(20px);
+}
+
+.ad-switch input:focus-visible + .ad-switch__track {
+    box-shadow: 0 0 0 3px var(--tv-bosque-soft);
+}
+
+.ad-switch__text {
+    display: grid;
+    gap: 0.05rem;
+}
+
+.ad-switch__text strong {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: var(--tv-ink);
+}
+
+.ad-switch__text small {
+    font-size: 0.76rem;
+    color: var(--tv-ink-2);
+}
+
+/* Tarjeta de vista previa en vivo */
+.ad-edit__preview {
+    background: var(--tv-white);
+    border: 1px solid var(--tv-plata-200);
+    border-radius: var(--tv-radius-md);
+    overflow: hidden;
+    box-shadow: var(--tv-shadow-sm);
+}
+
+.ad-edit__preview-head {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.85rem 1rem;
+    background: var(--tv-grad-ribbon);
+}
+
+.ad-edit__preview-ico {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.18);
+    color: var(--tv-white);
+    flex: none;
+}
+
+.ad-edit__preview-head h3 {
+    margin: 0;
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: var(--tv-white);
+}
+
+.ad-edit__preview-head p {
+    margin: 0.1rem 0 0;
+    font-size: 0.76rem;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.ad-edit__preview-stage {
+    padding: 1.2rem 1rem;
+    background:
+        radial-gradient(circle at 20% 15%, rgba(15, 163, 163, 0.07), transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(14, 74, 110, 0.07), transparent 45%),
+        var(--tv-plata-50);
+    pointer-events: none;
+}
+
+.ad-edit__preview-stage .tcard {
+    max-width: 340px;
+    margin-inline: auto;
+}
+
+/* Pequeño giro para el botón de guardar mientras se envía */
+.ad-spin {
+    animation: ad-rotate 0.9s linear infinite;
+}
+
+@keyframes ad-rotate {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 /* Responsive */
 @media (max-width: 1080px) {
     .ad-stats {
@@ -898,5 +1452,46 @@
     .ad-row__actions {
         width: 100%;
         justify-content: flex-end;
+    }
+}
+
+/* Ajustes del formulario de viajes */
+@media (max-width: 1080px) {
+    .ad-edit {
+        grid-template-columns: minmax(0, 1fr) 320px;
+        gap: 1.2rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .ad-edit {
+        grid-template-columns: 1fr;
+    }
+
+    .ad-edit__side {
+        position: static;
+    }
+}
+
+@media (max-width: 600px) {
+    .ad-edit__foot {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .ad-edit__actions {
+        justify-content: stretch;
+    }
+
+    .ad-edit__actions .tv-btn {
+        flex: 1;
+    }
+
+    .ad-drop--image .ad-drop__img {
+        height: 220px;
+    }
+
+    .ad-switch {
+        align-items: flex-start;
     }
 }
