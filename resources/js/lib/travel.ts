@@ -1,4 +1,4 @@
-import type { TravelCategory, TravelPostData } from '@/types/travel';
+import type { TravelCategory, TravelCurrency, TravelPostData } from '@/types/travel';
 
 const MONTHS = [
     'ene', 'feb', 'mar', 'abr', 'may', 'jun',
@@ -71,8 +71,11 @@ export function nightsLabel(start: string | null, end: string | null): string {
     return nights > 0 ? `${days} días · ${nights} noches` : `${days} días`;
 }
 
-export function priceLabel(price: string | null | undefined): string {
-    if (!price) {
+export function priceLabel(
+    price: string | number | null | undefined,
+    currency: TravelCurrency = 'usdt',
+): string {
+    if (price === null || price === undefined || price === '') {
         return '';
     }
     const numeric = Number(price);
@@ -83,7 +86,9 @@ export function priceLabel(price: string | null | undefined): string {
         minimumFractionDigits: numeric % 1 === 0 ? 0 : 2,
         maximumFractionDigits: 2,
     });
-    return `Desde $${formatted}`;
+    return currency === 'ves'
+        ? `Desde Bs ${formatted}`
+        : `Desde $${formatted} USDT`;
 }
 
 export function isUpcomingPost(post: TravelPostData): boolean {

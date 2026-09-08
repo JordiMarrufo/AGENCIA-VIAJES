@@ -23,7 +23,8 @@ import { posts } from '@/routes/admin';
 import { home } from '@/routes';
 import MediaGallery, { type MediaEntry } from '@/components/admin/media-gallery';
 import TravelCard from '@/components/public/travel-card';
-import type { TravelPostData } from '@/types/travel';
+import type { TravelCurrency, TravelPostData } from '@/types/travel';
+import { priceLabel } from '@/lib/travel';
 
 type TravelPostRow = {
     id: number;
@@ -36,6 +37,7 @@ type TravelPostRow = {
     starts_at: string | null;
     ends_at: string | null;
     price: string | number | null;
+    currency: TravelCurrency;
     is_published: boolean;
     cover_image_url: string | null;
     gallery_image_urls: string[];
@@ -54,9 +56,20 @@ type Fields = {
     excerpt: string;
     content: string;
     price: string;
+    currency: TravelCurrency;
     starts_at: string;
     ends_at: string;
     is_published: boolean;
+};
+
+const CURRENCY_OPTIONS: { value: TravelCurrency; label: string }[] = [
+    { value: 'usdt', label: 'USDT' },
+    { value: 'ves', label: 'Bs' },
+];
+
+const CURRENCY_PLACEHOLDER: Record<TravelCurrency, string> = {
+    usdt: 'Ej. 499',
+    ves: 'Ej. 15.000.000',
 };
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -88,6 +101,7 @@ const EMPTY: Fields = {
     excerpt: '',
     content: '',
     price: '',
+    currency: 'usdt',
     starts_at: '',
     ends_at: '',
     is_published: true,
@@ -101,6 +115,7 @@ function fromRow(post: TravelPostRow): Fields {
         excerpt: post.excerpt ?? '',
         content: post.content ?? '',
         price: post.price !== null && post.price !== undefined ? String(post.price) : '',
+        currency: post.currency === 'ves' ? 'ves' : 'usdt',
         starts_at: String(post.starts_at ?? '').slice(0, 10),
         ends_at: String(post.ends_at ?? '').slice(0, 10),
         is_published: post.is_published,
@@ -324,6 +339,7 @@ export default function AdminPosts({ posts: records, errors = {} }: Props) {
             excerpt: fields.excerpt.trim() || null,
             content: fields.content,
             price: fields.price !== '' ? fields.price : null,
+            currency: fields.currency,
             starts_at: fields.starts_at || null,
             ends_at: fields.ends_at || null,
             cover_image_url: coverPreview ?? editing?.cover_image_url ?? null,
@@ -416,6 +432,7 @@ export default function AdminPosts({ posts: records, errors = {} }: Props) {
         if (fields.price !== '') {
             payload.price = Number(fields.price);
         }
+        payload.currency = fields.currency;
         if (fields.starts_at) {
             payload.starts_at = fields.starts_at;
         }
@@ -620,9 +637,40 @@ export default function AdminPosts({ posts: records, errors = {} }: Props) {
                                                 </div>
 
                                                 <div className="tv-field">
-                                                    <label htmlFor="post-price">Precio (USD)</label>
+                                                    <label id="post-price-label">Precio</label>
+                                                    <div
+                                                        className="ad-pills ad-pills--currency"
+                                                        role="radiogroup"
+                                                        aria-labelledby="post-price-label"
+                                                    >
+                                                        {CURRENCY_OPTIONS.map(({ value, label }) => (
+                                                            <label
+                                                                key={value}
+                                                                className={`ad-pill ad-pill--rio ${
+                                                                    fields.currency === value ? 'is-checked' : ''
+                                                                }`}
+                                                                title={
+                                                                    value === 'usdt'
+                                                                        ? 'USDT (dólar digital)'
+                                                                        : 'Bolívares venezolanos'
+                                                                }
+                                                            >
+                                                                <input
+                                                                    type="radio"
+                                                                    name="post-currency"
+                                                                    value={value}
+                                                                    checked={fields.currency === value}
+                                                                    onChange={() => updateField('currency', value)}
+                                                                />
+                                                                <span className="ad-pill__dot" aria-hidden="true" />
+                                                                {label}
+                                                            </label>
+                                                        ))}
+                                                    </div>
                                                     <div className="ad-input-ico">
-                                                        <span aria-hidden="true">$</span>
+                                                        <span aria-hidden="true">
+                                                            {fields.currency === 'ves' ? 'Bs' : '$'}
+                                                        </span>
                                                         <input
                                                             id="post-price"
                                                             type="number"
@@ -630,7 +678,7 @@ export default function AdminPosts({ posts: records, errors = {} }: Props) {
                                                             step="0.01"
                                                             value={fields.price}
                                                             onChange={(e) => updateField('price', e.target.value)}
-                                                            placeholder="Ej. 499"
+                                                            placeholder={CURRENCY_PLACEHOLDER[fields.currency]}
                                                         />
                                                     </div>
                                                 </div>
@@ -877,7 +925,7 @@ export default function AdminPosts({ posts: records, errors = {} }: Props) {
                                             {post.price !== null && post.price !== '' && (
                                                 <span>
                                                     <Clock size={13} aria-hidden="true" />
-                                                    Desde ${post.price}
+                                                    {priceLabel(post.price, post.currency)}
                                                 </span>
                                             )}
                                         </div>

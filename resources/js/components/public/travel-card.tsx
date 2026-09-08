@@ -22,7 +22,7 @@ export default function TravelCard({
     linkHref = travelDetailPath(post),
     linkLabel = 'Ver viaje',
 }: Props) {
-    const price = priceLabel(post.price);
+    const price = priceLabel(post.price, post.currency);
     const range = dateRangeLabel(post.starts_at, post.ends_at);
     const nights = nightsLabel(post.starts_at, post.ends_at);
     const showPrice = Number(post.price ?? 0) > 0;

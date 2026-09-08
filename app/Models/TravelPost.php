@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 #[Fillable([
     'title', 'slug', 'category', 'destination', 'excerpt', 'content',
-    'starts_at', 'ends_at', 'price', 'cover_image_path', 'video_path',
+    'starts_at', 'ends_at', 'price', 'currency', 'cover_image_path', 'video_path',
     'gallery_paths', 'gallery_video_paths', 'is_published', 'published_at',
 ])]
 class TravelPost extends Model

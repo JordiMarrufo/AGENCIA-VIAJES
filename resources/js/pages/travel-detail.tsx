@@ -35,7 +35,7 @@ export default function TravelDetail({ post, recommendedPosts }: DetailProps) {
     const videos = post.gallery_video_urls ?? [];
     const [lightbox, setLightbox] = useState<number | null>(null);
 
-    const price = priceLabel(post.price);
+    const price = priceLabel(post.price, post.currency);
     const range = dateRangeLabel(post.starts_at, post.ends_at);
     const nights = nightsLabel(post.starts_at, post.ends_at);
     const paragraphs = useMemo(

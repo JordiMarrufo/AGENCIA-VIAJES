@@ -4,6 +4,8 @@ export type TravelCategory =
     | 'promotion'
     | 'offer';
 
+export type TravelCurrency = 'usdt' | 'ves';
+
 export type TravelPostData = {
     id: number;
     title: string;
@@ -15,6 +17,7 @@ export type TravelPostData = {
     starts_at: string | null;
     ends_at: string | null;
     price: string | null;
+    currency: TravelCurrency;
     cover_image_url: string | null;
     gallery_image_urls: string[];
     gallery_video_urls: string[];
