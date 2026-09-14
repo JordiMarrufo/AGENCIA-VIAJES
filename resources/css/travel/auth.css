@@ -161,7 +161,7 @@
 .au-card {
     width: min(100%, 440px);
     background: var(--tv-white);
-    border: 1px solid var(--tv-plata-300);
+    border: 1px solid var(--tv-plata-200);
     border-radius: var(--tv-radius-lg);
     box-shadow: var(--tv-shadow-md);
     padding: clamp(1.6rem, 3vw, 2.4rem);
@@ -178,29 +178,41 @@
 }
 
 .au-card__head {
-    margin-bottom: 1.6rem;
+    margin-bottom: 1.8rem;
     text-align: center;
+}
+
+/* Cinta de marca: mar → río → bosque */
+.au-card__head::before {
+    content: '';
+    display: block;
+    width: 46px;
+    height: 4px;
+    margin: 0 auto 1.15rem;
+    border-radius: var(--tv-radius-pill);
+    background: var(--tv-grad-ribbon);
 }
 
 .au-card__head h1 {
     margin: 0;
-    font-size: 1.5rem;
+    font-size: clamp(1.5rem, 2.2vw, 1.72rem);
+    font-weight: 700;
     line-height: 1.2;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
     color: var(--tv-mar-ink);
 }
 
 .au-card__head p {
-    margin: 0.5rem auto 0;
-    max-width: 340px;
+    margin: 0.6rem auto 0;
+    max-width: 330px;
     font-size: 0.93rem;
-    line-height: 1.55;
+    line-height: 1.6;
     color: var(--tv-ink-2);
 }
 
 /* Estado global (mensajes tipo "hemos enviado el enlace") */
 .au-status {
-    margin: 0 0 1rem;
+    margin: 1.1rem 0 0;
     padding: 0.8rem 1rem;
     border-radius: var(--tv-radius-sm);
     background: var(--tv-bosque-soft);
@@ -227,21 +239,183 @@
     text-decoration: underline;
 }
 
+/* ------------------------------------------------------------
+   Bloque de acceso: llave de acceso + separador
+   ------------------------------------------------------------ */
+
+.au-passkey {
+    display: grid;
+    gap: 0.55rem;
+}
+
+.au-passkey__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    width: 100%;
+    min-height: 48px;
+    padding: 0.8rem 1.3rem;
+    border: 1px solid var(--tv-plata-300);
+    border-radius: var(--tv-radius-pill);
+    background: var(--tv-plata-50);
+    font-family: var(--tv-font);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--tv-mar-deep);
+    cursor: pointer;
+    transition: border-color 0.16s ease, background-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
+}
+
+.au-passkey__btn svg {
+    color: var(--tv-rio-deep);
+    flex: none;
+}
+
+.au-passkey__btn:hover:not(:disabled) {
+    background: var(--tv-white);
+    border-color: var(--tv-rio-line);
+    color: var(--tv-rio-deep);
+    box-shadow: var(--tv-shadow-sm);
+    transform: translateY(-1px);
+}
+
+.au-passkey__btn:focus-visible {
+    outline: none;
+    border-color: var(--tv-rio);
+    box-shadow: 0 0 0 3px var(--tv-rio-soft);
+}
+
+.au-passkey__btn:disabled {
+    opacity: 0.75;
+    cursor: progress;
+    transform: none;
+}
+
+.au-passkey__error {
+    text-align: center;
+}
+
+.au-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin: 1.4rem 0;
+}
+
+.au-divider::before,
+.au-divider::after {
+    content: '';
+    flex: 1 1 0;
+    height: 1px;
+    background: var(--tv-plata-200);
+}
+
+.au-divider span {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--tv-plata-500);
+    text-align: center;
+}
+
+/* ------------------------------------------------------------
+   Formulario
+   ------------------------------------------------------------ */
+
+.au-form {
+    display: grid;
+    gap: 1.15rem;
+}
+
+.au-field {
+    display: grid;
+    gap: 0.45rem;
+}
+
+.au-field label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--tv-ink);
+}
+
+.au-field input {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--tv-plata-300);
+    border-radius: var(--tv-radius-sm);
+    background: var(--tv-plata-50);
+    font-family: var(--tv-font);
+    font-size: 0.95rem;
+    color: var(--tv-ink);
+    transition: border-color 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+}
+
+.au-field input::placeholder {
+    color: var(--tv-plata-500);
+}
+
+.au-field input:hover {
+    border-color: var(--tv-plata-400);
+}
+
+.au-field input:focus {
+    outline: none;
+    border-color: var(--tv-rio);
+    background: var(--tv-white);
+    box-shadow: 0 0 0 3px var(--tv-rio-soft);
+}
+
+.au-field__error {
+    margin: 0;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #c42f2f;
+}
+
+.au-submit {
+    width: 100%;
+    min-height: 48px;
+    padding-block: 0.9rem;
+    font-size: 1rem;
+}
+
+.au-submit:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--tv-magenta-soft), 0 12px 24px -12px rgba(225, 41, 161, 0.8);
+}
+
 /* Recordar sesión (checkbox nativo estilizado) */
 .au-remember {
     display: flex;
     align-items: center;
-    gap: 0.55rem;
+    gap: 0.6rem;
+    width: fit-content;
+    padding: 0.15rem 0;
     font-size: 0.9rem;
     color: var(--tv-ink-2);
     cursor: pointer;
+    user-select: none;
+}
+
+.au-remember:hover {
+    color: var(--tv-ink);
 }
 
 .au-remember input {
+    flex: none;
     width: 18px;
     height: 18px;
     accent-color: var(--tv-magenta);
     cursor: pointer;
+}
+
+.au-remember input:focus-visible {
+    outline: 2px solid var(--tv-rio);
+    outline-offset: 2px;
 }
 
 .au-actions {
@@ -255,6 +429,7 @@
     font-weight: 600;
     color: var(--tv-mar);
     text-decoration: none;
+    border-radius: 4px;
 }
 
 .au-forgot:hover {
@@ -280,6 +455,11 @@
     animation: au-spin 0.7s linear infinite;
 }
 
+.au-spinner--dark {
+    border-color: var(--tv-rio-line);
+    border-top-color: var(--tv-rio-deep);
+}
+
 @keyframes au-spin {
     to {
         transform: rotate(360deg);
@@ -298,5 +478,32 @@
 
     .au-card__brand {
         display: inline-flex;
+    }
+}
+
+@media (max-width: 520px) {
+    .au-main {
+        padding: 1.25rem 1rem;
+    }
+
+    .au-card {
+        padding: 1.5rem 1.25rem;
+        border-radius: var(--tv-radius-md);
+    }
+
+    .au-card__head {
+        margin-bottom: 1.5rem;
+    }
+
+    .au-card__head::before {
+        margin-bottom: 0.9rem;
+    }
+
+    .au-card__head p {
+        font-size: 0.9rem;
+    }
+
+    .au-divider span {
+        letter-spacing: 0.08em;
     }
 }

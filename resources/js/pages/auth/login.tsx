@@ -19,10 +19,14 @@ export default function Login({ status, canResetPassword }: Props) {
                 separator="o continúa con tu correo"
             />
 
-            <Form {...store.form()} resetOnSuccess={['password']} className="tv-form">
+            <Form
+                {...store.form()}
+                resetOnSuccess={['password']}
+                className="au-form"
+            >
                 {({ processing, errors }) => (
                     <>
-                        <div className="tv-field">
+                        <div className="au-field">
                             <label htmlFor="email">Correo electrónico</label>
                             <input
                                 id="email"
@@ -34,15 +38,17 @@ export default function Login({ status, canResetPassword }: Props) {
                                 placeholder="tucorreo@ejemplo.com"
                             />
                             {errors.email && (
-                                <p className="tv-field__error">{errors.email}</p>
+                                <p className="au-field__error">{errors.email}</p>
                             )}
                         </div>
 
-                        <div className="tv-field">
+                        <div className="au-field">
                             <div className="au-field-top">
                                 <label htmlFor="password">Contraseña</label>
                                 {canResetPassword && (
-                                    <a href={request().url} className="au-forgot" tabIndex={5}>¿Olvidaste tu contraseña?</a>
+                                    <a href={request().url} className="au-forgot">
+                                        ¿Olvidaste tu contraseña?
+                                    </a>
                                 )}
                             </div>
                             <input
@@ -54,23 +60,26 @@ export default function Login({ status, canResetPassword }: Props) {
                                 placeholder="Tu contraseña"
                             />
                             {errors.password && (
-                                <p className="tv-field__error">{errors.password}</p>
+                                <p className="au-field__error">
+                                    {errors.password}
+                                </p>
                             )}
                         </div>
 
                         <label className="au-remember">
                             <input type="checkbox" name="remember" />
-                            Recordarme en este equipo
+                            <span>Recordarme en este equipo</span>
                         </label>
 
                         <button
                             type="submit"
-                            className="tv-btn tv-btn--magenta"
-                            style={{ width: '100%', justifyContent: 'center' }}
+                            className="tv-btn tv-btn--magenta au-submit"
                             disabled={processing}
                             data-test="login-button"
                         >
-                            {processing && <span className="au-spinner" aria-hidden="true" />}
+                            {processing && (
+                                <span className="au-spinner" aria-hidden="true" />
+                            )}
                             {processing ? 'Entrando…' : 'Iniciar sesión'}
                         </button>
                     </>
